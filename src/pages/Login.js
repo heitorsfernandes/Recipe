@@ -6,6 +6,7 @@ export default function Login() {
   const [stateDisabled, setStateDisabled] = useState(true);
 
   const onLocalStorage = () => {
+    // Referência: https://developer.mozilla.org/en-US/docs/Web/API/Storage/setItem
     localStorage.setItem('user', JSON.stringify({ email }));
     localStorage.setItem('mealsToken', 1);
     localStorage.setItem('cocktailsToken', 1);
