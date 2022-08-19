@@ -5,6 +5,12 @@ export default function Login() {
   const [password, setStatePassword] = useState('');
   const [stateDisabled, setStateDisabled] = useState(true);
 
+  const onLocalStorage = () => {
+    localStorage.setItem('user', JSON.stringify({ email }));
+    localStorage.setItem('mealsToken', 1);
+    localStorage.setItem('cocktailsToken', 1);
+  };
+  // console.log(onLocalStorage);
   const onValidateBtn = () => {
     // Referência: https://pt.stackoverflow.com/questions/1386/express%C3%A3o-regular-para-valida%C3%A7%C3%A3o-de-e-mail
     const regexValidate = /^[a-z0-9.]+@[a-z0-9]+\.[a-z]+(\.[a-z]+)?$/i;
@@ -47,9 +53,9 @@ export default function Login() {
         type="button"
         data-testid="login-submit-btn"
         disabled={ stateDisabled }
+        onClick={ onLocalStorage }
       >
         Enter
-
       </button>
     </div>
   );
