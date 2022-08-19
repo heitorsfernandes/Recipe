@@ -1,15 +1,17 @@
 import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 
 export default function Login() {
   const [email, setStateEmail] = useState('');
   const [password, setStatePassword] = useState('');
   const [stateDisabled, setStateDisabled] = useState(true);
-
+  const history = useHistory();
   const onLocalStorage = () => {
     // Referência: https://developer.mozilla.org/en-US/docs/Web/API/Storage/setItem
     localStorage.setItem('user', JSON.stringify({ email }));
     localStorage.setItem('mealsToken', 1);
     localStorage.setItem('cocktailsToken', 1);
+    history.push('/foods');
   };
   // console.log(onLocalStorage);
   const onValidateBtn = () => {
