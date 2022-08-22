@@ -7,11 +7,11 @@ import './index.css';
 // import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(
-  <Provider>
-    <BrowserRouter>
+  <BrowserRouter>
+    <Provider>
       <App />
-    </BrowserRouter>
-  </Provider>,
+    </Provider>
+  </BrowserRouter>,
   document.getElementById('root'),
 );
 
