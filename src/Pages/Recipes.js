@@ -1,8 +1,11 @@
 import React from 'react';
+import Footer from '../Components/Footer';
 
 function Recipes() {
   return (
-    <h1>Hello Recipes</h1>
+    <div>
+      <Footer />
+    </div>
   );
 }
 
