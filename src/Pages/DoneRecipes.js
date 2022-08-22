@@ -1,8 +1,9 @@
 import React from 'react';
+import Header from '../Components/Header';
 
 function DoneRecipes() {
   return (
-    <h1>Hello DoneRecipes</h1>
+    <Header pageName="Done Recipes" search={ false } />
   );
 }
 
