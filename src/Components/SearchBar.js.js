@@ -3,7 +3,7 @@ import React from 'react';
 function SearchBar() {
   return (
     <div>
-      <form action="form-action.php" method="post">
+      <form>
         <p>
           <input type="radio" data-testid="ingredient-search-radio" />
           ingredient
