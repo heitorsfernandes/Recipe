@@ -1,4 +1,5 @@
 import React from 'react';
+import Footer from '../Components/Footer';
 import Header from '../Components/Header';
 import SearchBar from '../Components/SearchBar.js';
 
@@ -8,6 +9,7 @@ function Recipes() {
       <Header pageName="Foods" />
       <SearchBar />
       <h1>Hello Recipes</h1>
+      <Footer />
     </main>
   );
 }
