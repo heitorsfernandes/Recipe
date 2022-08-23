@@ -1,9 +1,12 @@
 import PropTypes from 'prop-types';
 import React, { useContext } from 'react';
+import { useHistory } from 'react-router-dom';
 import Context from '../Context/Context';
 import fetchData from '../Services/fetchApi';
 
 function SearchBar({ pageName }) {
+  const history = useHistory();
+
   const {
     radioSearch,
     setRadioSearch,
@@ -25,6 +28,13 @@ function SearchBar({ pageName }) {
       }
       const getData = await fetchData(inputSearch, radioSearch, pageName);
       setApiData(getData[titleAPI]);
+      console.log(getData[titleAPI]);
+      if (getData[titleAPI].length === 1 && pageName === 'foods') {
+        history.push(`/${pageName}/${getData[titleAPI][0].idMeal}`);
+      }
+      if (getData[titleAPI].length === 1 && pageName === 'drinks') {
+        history.push(`/${pageName}/${getData[titleAPI][0].idDrink}`);
+      }
     }
   };
 
