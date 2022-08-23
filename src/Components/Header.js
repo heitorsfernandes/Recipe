@@ -1,12 +1,15 @@
-import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import React, { useContext, useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import Context from '../Context/Context';
 import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
 
 function Header({ pageName, search }) {
   const history = useHistory();
   const [toggleSearch, setToggleSearch] = useState(false);
+  const { setInputSearch } = useContext(Context);
+
   return (
     <header>
       <button
@@ -31,7 +34,11 @@ function Header({ pageName, search }) {
         </button>)}
 
       { toggleSearch && (
-        <input type="text" data-testid="search-input" />
+        <input
+          type="text"
+          data-testid="search-input"
+          onChange={ ({ target }) => setInputSearch(target.value) }
+        />
       )}
 
     </header>

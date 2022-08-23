@@ -7,7 +7,7 @@ function RecipesDrinks() {
   return (
     <main>
       <Header pageName="Drinks" />
-      <SearchBar />
+      <SearchBar pageName="drinks" />
       <h1>Hello Recipes</h1>
       <Footer />
     </main>
