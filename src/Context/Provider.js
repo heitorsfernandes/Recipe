@@ -1,9 +1,14 @@
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { useState } from 'react';
 import Context from './Context';
 
 function Provider({ children }) {
-  const context = {};
+  const [radioSearch, setRadioSearch] = useState('');
+  const [inputSearch, setInputSearch] = useState('');
+  const [apiData, setApiData] = useState({});
+  const context = {
+    radioSearch, setRadioSearch, setInputSearch, setApiData, inputSearch };
+
   return (
     <Context.Provider value={ context }>
       { children }
