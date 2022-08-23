@@ -7,7 +7,7 @@ function Provider({ children }) {
   const [inputSearch, setInputSearch] = useState('');
   const [apiData, setApiData] = useState({});
   const context = {
-    radioSearch, setRadioSearch, setInputSearch, setApiData, inputSearch };
+    radioSearch, setRadioSearch, setInputSearch, setApiData, inputSearch, apiData };
 
   return (
     <Context.Provider value={ context }>
