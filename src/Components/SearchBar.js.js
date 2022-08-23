@@ -27,8 +27,11 @@ function SearchBar({ pageName }) {
         return global.alert('Your search must have only 1 (one) character');
       }
       const getData = await fetchData(inputSearch, radioSearch, pageName);
+      if (!getData[titleAPI]) {
+        setInputSearch('');
+        return global.alert('Sorry, we haven\'t found any recipes for these filters.');
+      }
       setApiData(getData[titleAPI]);
-      console.log(getData[titleAPI]);
       if (getData[titleAPI].length === 1 && pageName === 'foods') {
         history.push(`/${pageName}/${getData[titleAPI][0].idMeal}`);
       }

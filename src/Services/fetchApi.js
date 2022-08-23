@@ -6,7 +6,6 @@ const fetchApi = async (url, type, query) => {
 
 const fetchData = (inputSearch, radioSearch, pageName) => {
   if (pageName === 'foods') {
-    console.log(inputSearch);
     const url = 'themealdb';
     if (radioSearch === 'ingredient') {
       return fetchApi(url, 'filter.php?i', inputSearch);

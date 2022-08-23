@@ -5,7 +5,7 @@ import Context from './Context';
 function Provider({ children }) {
   const [radioSearch, setRadioSearch] = useState('');
   const [inputSearch, setInputSearch] = useState('');
-  const [apiData, setApiData] = useState({});
+  const [apiData, setApiData] = useState([]);
   const context = {
     radioSearch, setRadioSearch, setInputSearch, setApiData, inputSearch, apiData };
 
