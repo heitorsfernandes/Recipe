@@ -3,6 +3,7 @@ import Footer from '../Components/Footer';
 import Header from '../Components/Header';
 import SearchBar from '../Components/SearchBar.js';
 import SearchCards from '../Components/SearchCards';
+// testar bugs
 
 function Recipes() {
   return (
