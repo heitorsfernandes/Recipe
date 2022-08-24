@@ -8,7 +8,7 @@ function Profile() {
     localStorage.clear();
   };
 
-  const userEmail = JSON.parse(localStorage.getItem('user'));
+  const userEmail = JSON.parse(localStorage.getItem('user')) || {};
   return (
     <>
       <Header pageName="Profile" search={ false } />
