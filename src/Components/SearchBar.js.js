@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React, { useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import Context from '../Context/Context';
-import fetchData from '../Services/fetchApi';
+import { fetchData } from '../Services/fetchApi';
 
 function SearchBar({ pageName }) {
   const history = useHistory();
@@ -31,13 +31,13 @@ function SearchBar({ pageName }) {
         setInputSearch('');
         return global.alert('Sorry, we haven\'t found any recipes for these filters.');
       }
-      setApiData(getData[titleAPI]);
       if (getData[titleAPI].length === 1 && pageName === 'foods') {
         history.push(`/${pageName}/${getData[titleAPI][0].idMeal}`);
       }
       if (getData[titleAPI].length === 1 && pageName === 'drinks') {
         history.push(`/${pageName}/${getData[titleAPI][0].idDrink}`);
       }
+      setApiData(getData[titleAPI]);
     }
   };
 
