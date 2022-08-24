@@ -8,6 +8,8 @@ import { fetchApi } from '../Services/fetchApi';
 
 function RecipesDrinks() {
   const { setApiData } = useContext(Context);
+  const drinksCategories = [
+    'Ordinary Drink', 'Cocktail', 'Shake', 'Other/Unknown', 'Cocoa'];
 
   useEffect(() => {
     const newFetch = async () => {
@@ -21,6 +23,19 @@ function RecipesDrinks() {
     <main>
       <Header pageName="Drinks" />
       <SearchBar pageName="drinks" />
+      <div>
+        <button type="button" data-testid="All-category-filter">All</button>
+        {drinksCategories.map((category) => (
+          <button
+            key={ category }
+            type="button"
+            data-testid={ `${category}-category-filter` }
+          >
+            { category }
+
+          </button>
+        ))}
+      </div>
       <SearchCards />
       <Footer />
     </main>
