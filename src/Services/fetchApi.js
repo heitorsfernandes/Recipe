@@ -1,10 +1,10 @@
-const fetchApi = async (url, type, query) => {
+export const fetchApi = async (url, type, query) => {
   const response = await fetch(`https://www.${url}.com/api/json/v1/1/${type}=${query}`);
   const data = await response.json();
   return data;
 };
 
-const fetchData = (inputSearch, radioSearch, pageName) => {
+export const fetchData = (inputSearch, radioSearch, pageName) => {
   if (pageName === 'foods') {
     const url = 'themealdb';
     if (radioSearch === 'ingredient') {
@@ -30,5 +30,3 @@ const fetchData = (inputSearch, radioSearch, pageName) => {
     }
   }
 };
-
-export default fetchData;
