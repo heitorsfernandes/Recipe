@@ -50,9 +50,14 @@ function CardDoneRecipes() {
             alt="icone de compartilhar"
           />
           <ul>
-            <li
-              data-testid={ `${index}-${recipe.tags}-horizontal-tag` }
-            />
+            {recipe.tags.slice(0, 2).map((tagName, indexTag) => (
+              <li
+                key={ indexTag }
+                data-testid={ `${index}-${tagName}-horizontal-tag` }
+              >
+                {tagName}
+              </li>
+            ))}
           </ul>
         </div>
       ))}
