@@ -7,6 +7,7 @@ import './CategoryFilter.css';
 function CategoryFilter({ pageName }) {
   const { setApiData } = useContext(Context);
   const [categoryFilters, setCategoryFilters] = useState([]);
+  const [filters, setFilters] = useState('All');
   const categoriesNum = 5;
 
   const requestCategories = useCallback(async () => {
@@ -19,18 +20,26 @@ function CategoryFilter({ pageName }) {
     requestCategories();
   }, [pageName, requestCategories]);
 
+  const filterByAll = async () => {
+    const titleAPI = pageName === 'foods' ? 'foods' : 'drinks';
+    const data = await fetchApi(
+      titleAPI === 'foods' ? 'themealdb' : 'thecocktaildb', 'search.php?s', '',
+    ); setApiData(data[titleAPI === 'foods' ? 'meals' : 'drinks']);
+  };
+
+  const filterByCategory = async (filter) => {
+    const titleAPI = pageName === 'foods' ? 'foods' : 'drinks';
+    const result = await fetchDatabyCategories(filter, 'category', titleAPI);
+    setApiData(result[titleAPI === 'foods' ? 'meals' : titleAPI]);
+  };
+
   const onClick = async (filter) => {
-    if (filter === 'All') {
-      const titleAPI = pageName === 'foods' ? 'foods' : 'drinks';
-      const data = await fetchApi(
-        titleAPI === 'foods' ? 'themealdb' : 'thecocktaildb', 'search.php?s', '',
-      ); setApiData(data[titleAPI === 'foods' ? 'meals' : 'drinks']);
+    if (filter === 'All' || (filters === filter && filters !== 'All')) {
+      filterByAll();
+      setFilters('All');
     } else {
-      const filterByCategory = async () => {
-        const titleAPI = pageName === 'foods' ? 'foods' : 'drinks';
-        const result = await fetchDatabyCategories(filter, 'category', titleAPI);
-        setApiData(result[titleAPI === 'foods' ? 'meals' : titleAPI]);
-      }; filterByCategory();
+      filterByCategory(filter);
+      setFilters(filter);
     }
   };
 
