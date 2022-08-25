@@ -1,4 +1,5 @@
 import React, { useContext, useEffect } from 'react';
+import CategoryFilter from '../Components/CategoryFilter';
 import Footer from '../Components/Footer';
 import Header from '../Components/Header';
 import SearchBar from '../Components/SearchBar.js';
@@ -8,8 +9,8 @@ import { fetchApi } from '../Services/fetchApi';
 
 function RecipesDrinks() {
   const { setApiData } = useContext(Context);
-  const drinksCategories = [
-    'Ordinary Drink', 'Cocktail', 'Shake', 'Other/Unknown', 'Cocoa'];
+  /* const drinksCategories = [
+    'Ordinary Drink', 'Cocktail', 'Shake', 'Other/Unknown', 'Cocoa']; */
 
   useEffect(() => {
     const newFetch = async () => {
@@ -23,7 +24,8 @@ function RecipesDrinks() {
     <main>
       <Header pageName="Drinks" />
       <SearchBar pageName="drinks" />
-      <div>
+      <CategoryFilter pageName="drinks" />
+      { /* <div>
         <button type="button" data-testid="All-category-filter">All</button>
         {drinksCategories.map((category) => (
           <button
@@ -35,7 +37,7 @@ function RecipesDrinks() {
 
           </button>
         ))}
-      </div>
+        </div> */}
       <SearchCards />
       <Footer />
     </main>

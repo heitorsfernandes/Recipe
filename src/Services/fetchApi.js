@@ -30,3 +30,32 @@ export const fetchData = (inputSearch, radioSearch, pageName) => {
     }
   }
 };
+
+export const fetchDatabyCategories = (inputSearch, radioSearch, pageName) => {
+  if (pageName === 'foods') {
+    const url = 'themealdb';
+    if (radioSearch === 'category') {
+      return fetchApi(url, 'filter.php?c', inputSearch);
+    }
+    if (radioSearch === 'name') {
+      return fetchApi(url, 'search.php?s', inputSearch);
+    }
+  }
+  if (pageName === 'drinks') {
+    const url = 'thecocktaildb';
+    if (radioSearch === 'category') {
+      return fetchApi(url, 'filter.php?c', inputSearch);
+    }
+  }
+};
+
+export const fetchCategories = async (pageName) => {
+  let result = '';
+  if (pageName === 'foods') {
+    result = await fetch('https://www.themealdb.com/api/json/v1/1/list.php?c=list');
+  } else {
+    result = await fetch('https://www.thecocktaildb.com/api/json/v1/1/list.php?c=list');
+  }
+  const categories = await result.json();
+  return categories;
+};

@@ -1,0 +1,12 @@
+.recipes-items {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 10px;
+}
+
+.recipes-items img {
+  display: flex;
+  flex-wrap: wrap;
+  width: 30%;
+}
