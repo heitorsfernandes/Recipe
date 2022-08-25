@@ -10,7 +10,11 @@ function SearchCards() {
         (element, index) => {
           if (element.idMeal) {
             return (
-              <div data-testid={ `${index}-recipe-card` } key={ element.idMeal }>
+              <div
+                data-testid={ `${index}-recipe-card` }
+                className="recipes-items"
+                key={ element.idMeal }
+              >
                 <img
                   data-testid={ `${index}-card-img` }
                   src={ element.strMealThumb }
@@ -21,7 +25,11 @@ function SearchCards() {
           }
 
           return (
-            <div data-testid={ `${index}-recipe-card` } key={ element.idDrink }>
+            <div
+              data-testid={ `${index}-recipe-card` }
+              className="recipes-items"
+              key={ element.idDrink }
+            >
               <img
                 data-testid={ `${index}-card-img` }
                 src={ element.strDrinkThumb }

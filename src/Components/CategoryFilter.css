@@ -1,0 +1,12 @@
+.categoryFilter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 10px;
+}
+
+.categoryFilter button {
+  flex: 15%;
+  flex-basis: 80px;
+  padding: 2px;
+}
