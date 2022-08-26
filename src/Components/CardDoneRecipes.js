@@ -24,17 +24,24 @@ function CardDoneRecipes() {
     <section>
       {doneRecipes.map((recipe, index) => (
         <div key={ index }>
+          {
+            recipe.type === 'food' ? (
+              <p data-testid={ `${index}-horizontal-top-text` }>
+                { `${recipe.nationality} - ${recipe.category}` }
+              </p>
+            )
+              : (
+                <p data-testid={ `${index}-horizontal-top-text` }>
+                  { recipe.alcoholicOrNot}
+                </p>
+              )
+          }
           <img
             data-testid={ `${index}-horizontal-image` }
             src={ recipe.image }
             alt={ recipe.name }
             className="img"
           />
-          <p
-            data-testid={ `${index}-horizontal-top-text` }
-          >
-            {recipe.category}
-          </p>
           <p
             data-testid={ `${index}-horizontal-name` }
           >
@@ -60,7 +67,6 @@ function CardDoneRecipes() {
           </ul>
         </div>
       ))}
-
     </section>
   );
 }
