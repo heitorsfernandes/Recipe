@@ -2,18 +2,16 @@ import PropTypes from 'prop-types';
 import React, { useEffect, useContext } from 'react';
 import { fetchApi } from '../Services/fetchApi';
 import Context from '../Context/Context';
-import DetailCardFood from '../Components/DetailCardFood';
+import DetailCardDrink from '../Components/DetailCardDrink';
 
 function RecipeDetails({ match }) {
   const { setApiData } = useContext(Context);
   const { id } = match.params;
-  const newId = id.replace(':', '');
 
   useEffect(() => {
     const fetchDetail = async () => {
-      const response = await fetchApi('themealdb', 'lookup.php?i', newId);
-      console.log(response);
-      setApiData(response.meals);
+      const response = await fetchApi('thecocktaildb', 'lookup.php?i', id);
+      setApiData(response.drinks);
     };
 
     fetchDetail();
@@ -21,9 +19,8 @@ function RecipeDetails({ match }) {
 
   return (
     <section>
-      <DetailCardFood pageType="Meal" />
+      <DetailCardDrink pageType="drinks" />
     </section>
-
   );
 }
 

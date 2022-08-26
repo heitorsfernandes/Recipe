@@ -32,10 +32,10 @@ function SearchBar({ pageName }) {
         return global.alert('Sorry, we haven\'t found any recipes for these filters.');
       }
       if (getData[titleAPI].length === 1 && pageName === 'foods') {
-        history.push(`/${pageName}/${getData[titleAPI][0].idMeal}`);
+        history.push(`/${pageName}/:${getData[titleAPI][0].idMeal}`);
       }
       if (getData[titleAPI].length === 1 && pageName === 'drinks') {
-        history.push(`/${pageName}/${getData[titleAPI][0].idDrink}`);
+        history.push(`/${pageName}/:${getData[titleAPI][0].idDrink}`);
       }
       setApiData(getData[titleAPI]);
     }
