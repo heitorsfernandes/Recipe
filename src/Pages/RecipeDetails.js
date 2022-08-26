@@ -3,16 +3,22 @@ import React, { useEffect, useContext } from 'react';
 import { fetchApi } from '../Services/fetchApi';
 import Context from '../Context/Context';
 import DetailCardFood from '../Components/DetailCardFood';
+import DetailCardDrink from '../Components/DetailCardDrink';
 
-function RecipeDetails({ match }) {
+function RecipeDetails({ match, food }) {
   const { setApiData } = useContext(Context);
   const { id } = match.params;
-  const newId = id.replace(':', '');
 
   useEffect(() => {
     const fetchDetail = async () => {
-      const response = await fetchApi('themealdb', 'lookup.php?i', newId);
-      setApiData(response.meals);
+      if (food) {
+        const response = await fetchApi('themealdb', 'lookup.php?i', id);
+        console.log(response);
+        setApiData(response.meals);
+      } else {
+        const response = await fetchApi('thecocktaildb', 'lookup.php?i', id);
+        setApiData(response.drinks);
+      }
     };
 
     fetchDetail();
@@ -20,11 +26,22 @@ function RecipeDetails({ match }) {
 
   return (
     <section>
-      <DetailCardFood pageType="Meal" />
+      { food ? (<DetailCardFood />) : (<DetailCardDrink />) }
     </section>
 
   );
 }
+
+RecipeDetails.propTypes = {
+  food: PropTypes.bool,
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      id: PropTypes.shape({
+        replace: PropTypes.func,
+      }),
+    }),
+  }),
+}.isRequired;
 
 RecipeDetails.propTypes = {
   match: PropTypes.shape({

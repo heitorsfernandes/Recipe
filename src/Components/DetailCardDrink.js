@@ -1,28 +1,48 @@
 import PropTypes from 'prop-types';
 import React, { useContext } from 'react';
 import { useHistory } from 'react-router-dom';
+import { Swiper, SwiperSlide } from 'swiper/react';
 import Context from '../Context/Context';
 
 function DetailCardDrink() {
   const { apiData } = useContext(Context);
   const isInProgress = false;
   const history = useHistory();
-  console.log(apiData);
+
+  const allIngredients = Object.keys(apiData[0] || []);
+  const validIngredients = allIngredients
+    .filter((ingredient) => ingredient.includes('Ingredient') && apiData[0][ingredient]);
   return (
     <section>
-      {apiData && (
+      {apiData[0] && (
         <>
           <div>
-            <img src={ apiData[0].strDrinkThumb } alt="Recipe" />
-            <h2>{apiData[0].strDrink}</h2>
-            <p>{apiData[0].strAlcoholic}</p>
+            <img
+              src={ apiData[0]?.strDrinkThumb || '' }
+              alt="Recipe"
+              data-testid="recipe-photo"
+            />
+            <h2 data-testid="recipe-title">{apiData[0].strDrink}</h2>
+            <p data-testid="recipe-category">{apiData[0].strAlcoholic}</p>
           </div>
-          <div />
+          <h3>Ingredients</h3>
+          { validIngredients.map((each, index) => (
+            <div key={ each }>
+              <span data-testid={ `${index}-ingredient-name-and-measure` }>
+                {apiData[0][each]}
+                -
+                {apiData[0][`strMeasure${index + 1}`]}
+              </span>
+              <br />
+            </div>
+          )) }
           <div>
             <h3>Instruções</h3>
             <p data-testid="instructions">{apiData[0].strInstructions}</p>
           </div>
-          <div />
+          <Swiper>
+            <SwiperSlide data-testid="0-recomendation-card" />
+          </Swiper>
           <button
             type="button"
             data-testid="start-recipe-btn"

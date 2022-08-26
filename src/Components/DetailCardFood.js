@@ -1,13 +1,15 @@
 import PropTypes from 'prop-types';
 import React, { useContext } from 'react';
 import { useHistory } from 'react-router-dom';
+import { Swiper, SwiperSlide } from 'swiper/react';
 import Context from '../Context/Context';
 import EmbedVideo from './EmbedVideo';
 
 function DetailCardFood() {
   const { apiData } = useContext(Context);
   const history = useHistory();
-  const youtubeId = apiData[0]?.strYoutube.split('=');
+  const youtubeId = apiData[0]?.strYoutube.split('=') || '';
+  console.log(youtubeId);
 
   const allIngredients = Object.keys(apiData[0] || []);
   const validIngredients = allIngredients
@@ -16,7 +18,6 @@ function DetailCardFood() {
   // const allMeasures = Object.keys(apiData[0] || []);
   // const validMeasures = allMeasures
   //   .filter((measure) => measure.includes('Measure') && apiData[0][measure]);
-
   const isInProgress = false;
 
   const recipeDone = JSON.parse(localStorage.getItem('doneRecipes')) || [];
@@ -54,7 +55,9 @@ function DetailCardFood() {
             <p data-testid="instructions">{apiData[0].strInstructions}</p>
           </div>
           <EmbedVideo embedId={ youtubeId } />
-          <div />
+          <Swiper>
+            <SwiperSlide data-testid="0-recomendation-card" />
+          </Swiper>
           { !isDone && (
             <button
               type="button"
@@ -70,7 +73,7 @@ function DetailCardFood() {
 
   );
 }
-// foto, titulo, categoria, ingredientes, instruções, video(comida),recomendadas
+
 DetailCardFood.propTypes = {
   pageType: PropTypes.string,
 }.isRequired;
