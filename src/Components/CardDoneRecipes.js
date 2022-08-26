@@ -22,7 +22,7 @@ function CardDoneRecipes() {
     : [];
 
   return (
-    <div>
+    <section>
       {doneRecipes.map((recipe, index) => (
         <div key={ index }>
           <img
@@ -34,7 +34,7 @@ function CardDoneRecipes() {
           <p
             data-testid={ `${index}-horizontal-top-text` }
           >
-            {recipe.type }
+            {recipe.category}
           </p>
           <p
             data-testid={ `${index}-horizontal-name` }
@@ -62,7 +62,7 @@ function CardDoneRecipes() {
         </div>
       ))}
 
-    </div>
+    </section>
   );
 }
 
