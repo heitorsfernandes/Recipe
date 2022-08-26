@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import { drinkAPI, recipeAPI } from '../Services/fetchApiRecipe';
-import { localStorageIngredients } from '../Services/LocalStorageIngredients';
+import localStorageIngredients from '../Services/LocalStorageIngredients';
 
 const copy = require('clipboard-copy');
 
