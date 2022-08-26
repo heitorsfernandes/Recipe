@@ -1,6 +1,5 @@
 import React from 'react';
 import shareIcon from '../images/shareIcon.svg';
-// implementar a lógica de mostrar a receita feita
 // implementar função de compartilhar
 // a chave do doneRecipes vem do localStorage
 // a chave doneRecipes deve conter a seguinte estrutura:
@@ -22,7 +21,7 @@ function CardDoneRecipes() {
     : [];
 
   return (
-    <div>
+    <section>
       {doneRecipes.map((recipe, index) => (
         <div key={ index }>
           <img
@@ -34,7 +33,7 @@ function CardDoneRecipes() {
           <p
             data-testid={ `${index}-horizontal-top-text` }
           >
-            {recipe.type }
+            {recipe.category}
           </p>
           <p
             data-testid={ `${index}-horizontal-name` }
@@ -62,7 +61,7 @@ function CardDoneRecipes() {
         </div>
       ))}
 
-    </div>
+    </section>
   );
 }
 
