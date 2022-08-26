@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import shareIcon from '../images/shareIcon.svg';
 // implementar função de compartilhar
 // a chave do doneRecipes vem do localStorage
@@ -36,17 +37,22 @@ function CardDoneRecipes() {
                 </p>
               )
           }
-          <img
-            data-testid={ `${index}-horizontal-image` }
-            src={ recipe.image }
-            alt={ recipe.name }
-            className="img"
-          />
-          <p
-            data-testid={ `${index}-horizontal-name` }
-          >
-            {recipe.name }
-          </p>
+          <Link to={ `/${recipe.type}s/${recipe.id}` }>
+            <div data-testid={ `${index}-horizontal-image` }>
+              <img
+                src={ recipe.image }
+                alt={ recipe.name }
+                className="img"
+              />
+            </div>
+          </Link>
+          <Link to={ `/${recipe.type}s/${recipe.id}` }>
+            <p
+              data-testid={ `${index}-horizontal-name` }
+            >
+              {recipe.name }
+            </p>
+          </Link>
           <p data-testid={ `${index}-horizontal-done-date` }>
             {recipe.doneDate }
           </p>
