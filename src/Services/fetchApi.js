@@ -4,7 +4,9 @@ export const fetchApi = async (url, type, query) => {
   return data;
 };
 
-const searchPhp = 'search.php?s';
+
+const searchS = 'search.php?s';
+
 
 export const fetchData = (inputSearch, radioSearch, pageName) => {
   if (pageName === 'foods') {
@@ -13,7 +15,9 @@ export const fetchData = (inputSearch, radioSearch, pageName) => {
       return fetchApi(url, 'filter.php?i', inputSearch);
     }
     if (radioSearch === 'name') {
-      return fetchApi(url, searchPhp, inputSearch);
+
+      return fetchApi(url, searchS, inputSearch);
+
     }
     if (radioSearch === 'first-letter') {
       return fetchApi(url, 'search.php?f', inputSearch);
@@ -25,7 +29,9 @@ export const fetchData = (inputSearch, radioSearch, pageName) => {
       return fetchApi(url, 'filter.php?i', inputSearch);
     }
     if (radioSearch === 'name') {
-      return fetchApi(url, searchPhp, inputSearch);
+
+      return fetchApi(url, searchS, inputSearch);
+
     }
     if (radioSearch === 'first-letter') {
       return fetchApi(url, 'search.php?f', inputSearch);
@@ -40,7 +46,7 @@ export const fetchDatabyCategories = (inputSearch, radioSearch, pageName) => {
       return fetchApi(url, 'filter.php?c', inputSearch);
     }
     if (radioSearch === 'name') {
-      return fetchApi(url, 'search.php?s', inputSearch);
+      return fetchApi(url, searchS, inputSearch);
     }
   }
   if (pageName === 'drinks') {
