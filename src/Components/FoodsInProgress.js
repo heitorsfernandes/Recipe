@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import { drinkAPI, recipeAPI } from '../Services/fetchApiRecipe';
-import localStorageIngredients from '../Services/LocalStorageIngredients';
+import { LocalStorageIngredients } from '../Services/LocalStorageIngredients';
 
 const copy = require('clipboard-copy');
 
@@ -51,12 +51,12 @@ function FoodsInProgress({ drink = false }) {
     if (ingredient.includes(e.target.id)) {
       const filterIngred = ingredient
         .filter((markedIngredient) => markedIngredient !== e.target.id);
-      localStorageIngredients(drink, { [id]: filterIngred });
+      LocalStorageIngredients(drink, { [id]: filterIngred });
       return setIngredient(filterIngred);
     }
     setIngredient([...ingredient, e.target.id]);
     const ingredientId = { [id]: [...ingredient, e.target.id] };
-    localStorageIngredients(drink, ingredientId);
+    LocalStorageIngredients(drink, ingredientId);
   };
 
   const recipeIngredients = Object.keys(recipe || {}) //
