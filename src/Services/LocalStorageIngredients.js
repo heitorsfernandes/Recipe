@@ -1,5 +1,4 @@
-// eslint-disable-next-line import/prefer-default-export
-export const localStorageIngredients = (drink, object) => {
+const localStorageIngredients = (drink, object) => {
   if (!JSON.parse(localStorage.getItem('inProgressRecipes'))) {
     return localStorage.setItem('inProgressRecipes',
       JSON.stringify({ cocktails: {}, meals: {} }));
@@ -15,4 +14,5 @@ export const localStorageIngredients = (drink, object) => {
     JSON.stringify(mealsIngredients));
 };
 
+export default localStorageIngredients;
 // função responsável por inserir e/ou pegar informações do local storage.
