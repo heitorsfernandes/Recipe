@@ -38,7 +38,7 @@ function Recipes() {
           </button>
         ))}
         </div>  */}
-      <SearchCards />
+      <SearchCards pageName="foods" />
       <Footer />
     </main>
   );
