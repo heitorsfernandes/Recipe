@@ -38,7 +38,7 @@ function RecipesDrinks() {
           </button>
         ))}
         </div> */}
-      <SearchCards />
+      <SearchCards pageName="drinks" />
       <Footer />
     </main>
   );
