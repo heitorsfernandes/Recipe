@@ -3,7 +3,7 @@ import React, { useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import Context from '../Context/Context';
 
-function DetailCardDrink({ pageType }) {
+function DetailCardDrink() {
   const { apiData } = useContext(Context);
   const isInProgress = false;
   const history = useHistory();
@@ -13,20 +13,20 @@ function DetailCardDrink({ pageType }) {
       {apiData && (
         <>
           <div>
-            {/* <img src={ `${apiData[0]}.str${pageType}Thumb` } alt="Recipe" />
-        <h2>{`${apiData[0]}.str${pageType}`}</h2> */}
-            <img src={ apiData[0].strMealThumb } alt="Recipe" />
-            <h2>{apiData[0].strMeal}</h2>
-            {pageType === 'Meal' ? (<p>{apiData[0].strCategory}</p>)
-              : (<p>{apiData[0].strAlcoholic}</p>)}
+            <img src={ apiData[0].strDrinkThumb } alt="Recipe" />
+            <h2>{apiData[0].strDrink}</h2>
+            <p>{apiData[0].strAlcoholic}</p>
           </div>
           <div />
-          <div />
+          <div>
+            <h3>Instruções</h3>
+            <p data-testid="instructions">{apiData[0].strInstructions}</p>
+          </div>
           <div />
           <button
             type="button"
             data-testid="start-recipe-btn"
-            onClick={ () => history.push(`/drinks/${recipeData.idDrink}/in-progress`) }
+            onClick={ () => history.push(`/drinks/${apiData[0].idDrink}/in-progress`) }
           >
             {isInProgress ? 'Continue Recipe' : 'Start Recipe'}
           </button>

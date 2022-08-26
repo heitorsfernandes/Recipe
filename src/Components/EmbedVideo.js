@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import embedVideo from './CSS/embedVideo.css';
+import './CSS/embedVideo.css';
 
 // fonte: https://dev.to/bravemaster619/simplest-way-to-embed-a-youtube-video-in-your-react-app-3bk2
 
@@ -15,6 +15,7 @@ const EmbedVideo = ({ embedId }) => (
        autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
       allowFullScreen
       title="Embedded youtube"
+      data-testid="video"
     />
   </div>
 );

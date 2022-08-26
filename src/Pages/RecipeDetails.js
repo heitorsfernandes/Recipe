@@ -12,7 +12,6 @@ function RecipeDetails({ match }) {
   useEffect(() => {
     const fetchDetail = async () => {
       const response = await fetchApi('themealdb', 'lookup.php?i', newId);
-      console.log(response);
       setApiData(response.meals);
     };
 
