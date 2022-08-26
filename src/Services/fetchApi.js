@@ -4,6 +4,8 @@ export const fetchApi = async (url, type, query) => {
   return data;
 };
 
+const searchPhp = 'search.php?s';
+
 export const fetchData = (inputSearch, radioSearch, pageName) => {
   if (pageName === 'foods') {
     const url = 'themealdb';
@@ -11,7 +13,7 @@ export const fetchData = (inputSearch, radioSearch, pageName) => {
       return fetchApi(url, 'filter.php?i', inputSearch);
     }
     if (radioSearch === 'name') {
-      return fetchApi(url, 'search.php?s', inputSearch);
+      return fetchApi(url, searchPhp, inputSearch);
     }
     if (radioSearch === 'first-letter') {
       return fetchApi(url, 'search.php?f', inputSearch);
@@ -23,7 +25,7 @@ export const fetchData = (inputSearch, radioSearch, pageName) => {
       return fetchApi(url, 'filter.php?i', inputSearch);
     }
     if (radioSearch === 'name') {
-      return fetchApi(url, 'search.php?s', inputSearch);
+      return fetchApi(url, searchPhp, inputSearch);
     }
     if (radioSearch === 'first-letter') {
       return fetchApi(url, 'search.php?f', inputSearch);

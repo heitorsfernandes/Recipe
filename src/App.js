@@ -18,10 +18,10 @@ function App() {
       <Route exact path="/drinks" component={ RecipesDrinks } />
       <Route path="/foods/{id-da-receita}" component={ RecipeDetails } />
       <Route path="/drinks/{id-da-receita}" component={ RecipeDetails } />
-      <Route path="/foods/{id-da-receita}/in-progress" component={ RecipeInProgress } />
+      <Route path="/Recipe/:id/in-progress" component={ RecipeInProgress } />
       <Route
-        path="/drinks/{id-da-receita}/in-progress"
-        component={ RecipeInProgress }
+        path="/drinks/:id/in-progress"
+        render={ () => <RecipeInProgress drink /> }
       />
       <Route path="/done-recipes" component={ DoneRecipes } />
       <Route path="/profile" component={ Profile } />
