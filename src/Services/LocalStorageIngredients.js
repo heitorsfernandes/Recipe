@@ -14,3 +14,5 @@ export const localStorageIngredients = (drink, object) => {
   return localStorage.setItem('inProgressRecipes',
     JSON.stringify(mealsIngredients));
 };
+
+// função responsável por inserir e/ou pegar informações do local storage.

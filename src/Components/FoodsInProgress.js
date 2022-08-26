@@ -59,8 +59,8 @@ function FoodsInProgress({ drink = false }) {
     localStorageIngredients(drink, ingredientId);
   };
 
-  const recipeIngredients = Object.keys(recipe || {})
-    .filter((elem) => elem.includes('strIngredient') && (recipe[elem]))
+  const recipeIngredients = Object.keys(recipe || {}) //
+    .filter((elem) => elem.includes('strIngredient') && (recipe[elem])) // caso o array tenha a string dentro do parametro retorna booleano
     .map((element) => recipe[element]).map((elemValid) => (
       <label
         htmlFor={ elemValid }
@@ -168,12 +168,12 @@ function FoodsInProgress({ drink = false }) {
         drink ? drinkRecipe : mealRecipe
       }
       {
-        recipeIngredients.map((ingredients, index) => (
+        recipeIngredients.map((elemIngredients, index) => (
           <p
             data-testid={ `${index}-ingredient-step` }
             key={ index }
           >
-            {ingredients}
+            {elemIngredients}
           </p>
         ))
       }
