@@ -23,10 +23,12 @@ function DetailCardFood({ recommendation }) {
   const six = 6;
   const sixRecommendations = recommendation.filter((_, index) => index < six);
 
-  const isInProgress = false;
+  const recipeInProgress = JSON.parse(localStorage.getItem('inProgressRecipes') || '{}');
+  const recipeKeysStoraged = Object.keys(recipeInProgress);
+  const isInProgress = recipeKeysStoraged.some((key) => key === apiData[0]?.idMeal);
 
   const recipeDone = JSON.parse(localStorage.getItem('doneRecipes')) || [];
-  const isDone = recipeDone.some((element) => element.id === apiData[0].idMeal);
+  const isDone = recipeDone.some((element) => element.id === apiData[0]?.idMeal);
 
   return (
     <section>
@@ -79,7 +81,7 @@ function DetailCardFood({ recommendation }) {
               data-testid="start-recipe-btn"
               onClick={ () => history.push(`/foods/${apiData[0].idMeal}/in-progress`) }
             >
-              {isInProgress ? 'Continue Recipe' : 'Start Recipe'}
+              {!isInProgress ? 'Continue Recipe' : 'Start Recipe'}
             </button>
           )}
 

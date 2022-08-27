@@ -8,7 +8,6 @@ import './CSS/startButton.css';
 
 function DetailCardDrink({ recommendation }) {
   const { apiData } = useContext(Context);
-  const isInProgress = false;
   const history = useHistory();
 
   const allIngredients = Object.keys(apiData[0] || []);
@@ -16,6 +15,14 @@ function DetailCardDrink({ recommendation }) {
     .filter((ingredient) => ingredient.includes('Ingredient') && apiData[0][ingredient]);
   const six = 6;
   const sixRecommendations = recommendation.filter((_, index) => index < six);
+
+  const recipeInProgress = JSON.parse(localStorage.getItem('inProgressRecipes') || '{}');
+  const recipeKeysStoraged = Object.keys(recipeInProgress);
+  const isInProgress = recipeKeysStoraged.some((key) => key === apiData[0]?.idDrink);
+
+  const recipeDone = JSON.parse(localStorage.getItem('doneRecipes')) || [];
+  const isDone = recipeDone.some((element) => element.id === apiData[0]?.idDrink);
+
   return (
     <section>
       {apiData[0] && (
@@ -56,14 +63,16 @@ function DetailCardDrink({ recommendation }) {
               </SwiperSlide>
             ))}
           </Swiper>
-          <button
-            className="start-button"
-            type="button"
-            data-testid="start-recipe-btn"
-            onClick={ () => history.push(`/drinks/${apiData[0].idDrink}/in-progress`) }
-          >
-            {isInProgress ? 'Continue Recipe' : 'Start Recipe'}
-          </button>
+          {!isDone && (
+            <button
+              className="start-button"
+              type="button"
+              data-testid="start-recipe-btn"
+              onClick={ () => history.push(`/drinks/${apiData[0].idDrink}/in-progress`) }
+            >
+              {!isInProgress ? 'Continue Recipe' : 'Start Recipe'}
+            </button>
+          )}
         </>)}
     </section>
 
