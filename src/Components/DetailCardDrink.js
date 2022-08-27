@@ -3,6 +3,7 @@ import React, { useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import Context from '../Context/Context';
+import './CSS/startButton.css';
 
 function DetailCardDrink() {
   const { apiData } = useContext(Context);
@@ -44,6 +45,7 @@ function DetailCardDrink() {
             <SwiperSlide data-testid="0-recomendation-card" />
           </Swiper>
           <button
+            className="start-button"
             type="button"
             data-testid="start-recipe-btn"
             onClick={ () => history.push(`/drinks/${apiData[0].idDrink}/in-progress`) }

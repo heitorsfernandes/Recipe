@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React, { useEffect, useContext } from 'react';
+import React, { useEffect, useContext, useState } from 'react';
 import { fetchApi } from '../Services/fetchApi';
 import Context from '../Context/Context';
 import DetailCardFood from '../Components/DetailCardFood';
@@ -8,6 +8,7 @@ import DetailCardDrink from '../Components/DetailCardDrink';
 function RecipeDetails({ match, food }) {
   const { setApiData } = useContext(Context);
   const { id } = match.params;
+  const [recommendation, setRecommendation] = useState([]);
 
   useEffect(() => {
     const fetchDetail = async () => {
@@ -20,13 +21,25 @@ function RecipeDetails({ match, food }) {
         setApiData(response.drinks);
       }
     };
+    const fetchRecomendation = async () => {
+      if (food) {
+        const response = await fetchApi('thecocktaildb', 'search.php?s', '');
+        console.log(response);
+        setRecommendation(response.drinks);
+      } else {
+        const response = await fetchApi('themealdb', 'search.php?s', '');
+        setRecommendation(response.meals);
+      }
+    };
 
     fetchDetail();
+    fetchRecomendation();
   }, []);
 
   return (
     <section>
-      { food ? (<DetailCardFood />) : (<DetailCardDrink />) }
+      { food ? (<DetailCardFood recommendation={ recommendation } />)
+        : (<DetailCardDrink recommendation={ recommendation } />) }
     </section>
 
   );

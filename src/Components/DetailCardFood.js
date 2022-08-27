@@ -4,6 +4,7 @@ import { useHistory } from 'react-router-dom';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import Context from '../Context/Context';
 import EmbedVideo from './EmbedVideo';
+import './CSS/startButton.css';
 
 function DetailCardFood() {
   const { apiData } = useContext(Context);
@@ -60,6 +61,7 @@ function DetailCardFood() {
           </Swiper>
           { !isDone && (
             <button
+              className="start-button"
               type="button"
               data-testid="start-recipe-btn"
               onClick={ () => history.push(`/foods/${apiData[0].idMeal}/in-progress`) }
