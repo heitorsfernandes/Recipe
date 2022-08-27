@@ -4,9 +4,10 @@ import { useHistory } from 'react-router-dom';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import Context from '../Context/Context';
 import EmbedVideo from './EmbedVideo';
+import './CSS/swiper-bundle.css';
 import './CSS/startButton.css';
 
-function DetailCardFood() {
+function DetailCardFood({ recommendation }) {
   const { apiData } = useContext(Context);
   const history = useHistory();
   const youtubeId = apiData[0]?.strYoutube.split('=') || '';
@@ -19,6 +20,9 @@ function DetailCardFood() {
   // const allMeasures = Object.keys(apiData[0] || []);
   // const validMeasures = allMeasures
   //   .filter((measure) => measure.includes('Measure') && apiData[0][measure]);
+  const six = 6;
+  const sixRecommendations = recommendation.filter((_, index) => index < six);
+
   const isInProgress = false;
 
   const recipeDone = JSON.parse(localStorage.getItem('doneRecipes')) || [];
@@ -56,8 +60,17 @@ function DetailCardFood() {
             <p data-testid="instructions">{apiData[0].strInstructions}</p>
           </div>
           <EmbedVideo embedId={ youtubeId } />
-          <Swiper>
-            <SwiperSlide data-testid="0-recomendation-card" />
+          <Swiper slidesPerView={ 1 }>
+            {sixRecommendations.map((rec, index) => (
+              <SwiperSlide key={ rec } data-testid={ `${index}-recomendation-card` }>
+                <img src={ rec.strDrinkThumb } alt={ rec.strDrink } width="100%" />
+                <span
+                  data-testid={ `${index}-recomendation-title` }
+                >
+                  {rec.strDrink}
+                </span>
+              </SwiperSlide>
+            ))}
           </Swiper>
           { !isDone && (
             <button

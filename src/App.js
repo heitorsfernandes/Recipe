@@ -9,6 +9,7 @@ import RecipeDetails from './Pages/RecipeDetails';
 import RecipeInProgress from './Pages/RecipeInProgress';
 import Recipes from './Pages/Recipes';
 import RecipesDrinks from './Pages/RecipesDrinks';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
   return (

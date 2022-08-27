@@ -3,9 +3,10 @@ import React, { useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import Context from '../Context/Context';
+import './CSS/swiper-bundle.css';
 import './CSS/startButton.css';
 
-function DetailCardDrink() {
+function DetailCardDrink({ recommendation }) {
   const { apiData } = useContext(Context);
   const isInProgress = false;
   const history = useHistory();
@@ -13,6 +14,8 @@ function DetailCardDrink() {
   const allIngredients = Object.keys(apiData[0] || []);
   const validIngredients = allIngredients
     .filter((ingredient) => ingredient.includes('Ingredient') && apiData[0][ingredient]);
+  const six = 6;
+  const sixRecommendations = recommendation.filter((_, index) => index < six);
   return (
     <section>
       {apiData[0] && (
@@ -41,8 +44,17 @@ function DetailCardDrink() {
             <h3>Instruções</h3>
             <p data-testid="instructions">{apiData[0].strInstructions}</p>
           </div>
-          <Swiper>
-            <SwiperSlide data-testid="0-recomendation-card" />
+          <Swiper slidesPerView={ 1 }>
+            {sixRecommendations.map((rec, index) => (
+              <SwiperSlide key={ rec } data-testid={ `${index}-recomendation-card` }>
+                <img src={ rec.strMealThumb } alt={ rec.strMeal } />
+                <span
+                  data-testid={ `${index}-recomendation-title` }
+                >
+                  {rec.strMeal}
+                </span>
+              </SwiperSlide>
+            ))}
           </Swiper>
           <button
             className="start-button"
