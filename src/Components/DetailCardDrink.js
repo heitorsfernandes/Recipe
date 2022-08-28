@@ -3,7 +3,7 @@ import React, { useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import Context from '../Context/Context';
-import './CSS/swiper-bundle.css';
+
 import './CSS/startButton.css';
 
 function DetailCardDrink({ recommendation }) {
@@ -74,6 +74,12 @@ function DetailCardDrink({ recommendation }) {
             </button>
           )}
         </>)}
+      <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css"
+      />
+
+      <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js" />
     </section>
 
   );

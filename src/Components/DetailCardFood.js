@@ -4,7 +4,7 @@ import { useHistory } from 'react-router-dom';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import Context from '../Context/Context';
 import EmbedVideo from './EmbedVideo';
-import './CSS/swiper-bundle.css';
+
 import './CSS/startButton.css';
 
 function DetailCardFood({ recommendation }) {
@@ -86,6 +86,12 @@ function DetailCardFood({ recommendation }) {
           )}
 
         </>)}
+      <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css"
+      />
+
+      <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js" />
     </section>
 
   );
