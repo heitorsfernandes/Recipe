@@ -42,7 +42,6 @@ function App() {
         <Route path="/favorite-recipes" component={ FavoriteRecipes } />
       </Switch>
     </BrowserRouter>
-
   );
 }
 

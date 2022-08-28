@@ -4,6 +4,8 @@ export const fetchApi = async (url, type, query) => {
   return data;
 };
 
+const searchS = 'search.php?s';
+
 export const fetchData = (inputSearch, radioSearch, pageName) => {
   if (pageName === 'foods') {
     const url = 'themealdb';
@@ -11,7 +13,7 @@ export const fetchData = (inputSearch, radioSearch, pageName) => {
       return fetchApi(url, 'filter.php?i', inputSearch);
     }
     if (radioSearch === 'name') {
-      return fetchApi(url, 'search.php?s', inputSearch);
+      return fetchApi(url, searchS, inputSearch);
     }
     if (radioSearch === 'first-letter') {
       return fetchApi(url, 'search.php?f', inputSearch);
@@ -23,10 +25,39 @@ export const fetchData = (inputSearch, radioSearch, pageName) => {
       return fetchApi(url, 'filter.php?i', inputSearch);
     }
     if (radioSearch === 'name') {
-      return fetchApi(url, 'search.php?s', inputSearch);
+      return fetchApi(url, searchS, inputSearch);
     }
     if (radioSearch === 'first-letter') {
       return fetchApi(url, 'search.php?f', inputSearch);
     }
   }
+};
+
+export const fetchDatabyCategories = (inputSearch, radioSearch, pageName) => {
+  if (pageName === 'foods') {
+    const url = 'themealdb';
+    if (radioSearch === 'category') {
+      return fetchApi(url, 'filter.php?c', inputSearch);
+    }
+    if (radioSearch === 'name') {
+      return fetchApi(url, searchS, inputSearch);
+    }
+  }
+  if (pageName === 'drinks') {
+    const url = 'thecocktaildb';
+    if (radioSearch === 'category') {
+      return fetchApi(url, 'filter.php?c', inputSearch);
+    }
+  }
+};
+
+export const fetchCategories = async (pageName) => {
+  let result = '';
+  if (pageName === 'foods') {
+    result = await fetch('https://www.themealdb.com/api/json/v1/1/list.php?c=list');
+  } else {
+    result = await fetch('https://www.thecocktaildb.com/api/json/v1/1/list.php?c=list');
+  }
+  const categories = await result.json();
+  return categories;
 };
