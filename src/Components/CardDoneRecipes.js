@@ -25,6 +25,16 @@ function CardDoneRecipes() {
     <section>
       {doneRecipes.map((recipe, index) => (
         <div key={ index }>
+          <div>
+            <Link to={ `/${recipe.type}s/${recipe.id}` }>
+              <img
+                data-testid={ `${index}-horizontal-image` }
+                src={ recipe.image }
+                alt={ recipe.name }
+                className="img"
+              />
+            </Link>
+          </div>
           {
             recipe.type === 'food' ? (
               <p data-testid={ `${index}-horizontal-top-text` }>
@@ -37,15 +47,6 @@ function CardDoneRecipes() {
                 </p>
               )
           }
-          <Link to={ `/${recipe.type}s/${recipe.id}` }>
-            <div data-testid={ `${index}-horizontal-image` }>
-              <img
-                src={ recipe.image }
-                alt={ recipe.name }
-                className="img"
-              />
-            </div>
-          </Link>
           <Link to={ `/${recipe.type}s/${recipe.id}` }>
             <p
               data-testid={ `${index}-horizontal-name` }
