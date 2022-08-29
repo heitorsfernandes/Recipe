@@ -1,7 +1,7 @@
 import clipboardCopy from 'clipboard-copy';
 import PropTypes from 'prop-types';
 import React, { useContext, useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import Context from '../Context/Context';
 import blackFavoriteIcon from '../images/blackHeartIcon.svg';
@@ -13,18 +13,22 @@ import EmbedVideo from './EmbedVideo';
 function DetailCardFood({ recommendation }) {
   const { apiData } = useContext(Context);
   const history = useHistory();
+  const { id } = useParams();
   const youtubeId = apiData[0]?.strYoutube.split('=') || '';
   const { location: { pathname } } = useHistory();
   const [copyUrl, setCopyUrl] = useState();
   const [favoriteState, setFavoriteState] = useState(false);
 
   useEffect(() => {
-    const validFavorite = JSON.parse(localStorage.getItem('favoriteRecipe'));
+    const validFavorite = JSON.parse(localStorage.getItem('favoriteRecipes')) || [];
     if (!validFavorite) {
-      localStorage.setItem('favoriteRecipe', JSON.stringify([]));
+      localStorage.setItem('favoriteRecipes', JSON.stringify([]));
     } else {
+      console.log(validFavorite);
+      console.log(apiData[0]);
+      console.log(id);
       setFavoriteState(
-        validFavorite.some((element) => element.id === apiData[0]?.idMeal),
+        validFavorite.some((element) => element.id === id),
       );
     }
   }, []);
@@ -32,18 +36,22 @@ function DetailCardFood({ recommendation }) {
   const saveFavoriteRecipe = () => {
     const favObj = {
       id: apiData[0]?.idMeal,
-      type: 'meals',
+      type: 'food',
       nationality: apiData[0]?.strArea,
       category: apiData[0]?.strCategory,
       name: apiData[0]?.strMeal,
       image: apiData[0]?.strMealThumb,
       alcoholicOrNot: '',
     };
-    const fav = JSON.parse(localStorage.getItem('favoriteRecipe'));
+    const fav = JSON.parse(localStorage.getItem('favoriteRecipes')) || [];
     if (fav === null) {
-      localStorage.setItem('favoriteRecipe', JSON.stringify([favObj]));
+      localStorage.setItem('favoriteRecipes', JSON.stringify([favObj]));
     } else {
-      localStorage.setItem('favoriteRecipe', JSON.stringify([...fav, favObj]));
+      if (favoriteState) {
+        const favRemoved = fav.filter((element) => element.id !== id);
+        localStorage.setItem('favoriteRecipes', JSON.stringify([favRemoved]));
+      }
+      localStorage.setItem('favoriteRecipes', JSON.stringify([...fav, favObj]));
     }
 
     setFavoriteState(!favoriteState);
@@ -100,7 +108,9 @@ function DetailCardFood({ recommendation }) {
               type="button"
               data-testid="favorite-btn"
               onClick={ saveFavoriteRecipe }
+              src={ favoriteState ? blackFavoriteIcon : whiteFavoriteIcon }
             >
+
               <img
                 src={ favoriteState ? blackFavoriteIcon : whiteFavoriteIcon }
                 alt="favorite icon"

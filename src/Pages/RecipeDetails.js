@@ -15,7 +15,7 @@ function RecipeDetails({ match, food }) {
     const fetchDetail = async () => {
       if (food) {
         const response = await fetchApi('themealdb', 'lookup.php?i', id);
-        console.log(response);
+
         setApiData(response.meals);
       } else {
         const response = await fetchApi('thecocktaildb', 'lookup.php?i', id);
@@ -25,7 +25,7 @@ function RecipeDetails({ match, food }) {
     const fetchRecomendation = async () => {
       if (food) {
         const response = await fetchApi('thecocktaildb', 'search.php?s', '');
-        console.log(response);
+
         setRecommendation(response.drinks);
       } else {
         const response = await fetchApi('themealdb', 'search.php?s', '');

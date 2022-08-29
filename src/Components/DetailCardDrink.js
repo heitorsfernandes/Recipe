@@ -1,35 +1,53 @@
 import clipboardCopy from 'clipboard-copy';
 import PropTypes from 'prop-types';
-import React, { useContext, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import React, { useContext, useEffect, useState } from 'react';
+import { useHistory, useParams } from 'react-router-dom';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import Context from '../Context/Context';
-import './CSS/swiper-bundle.css';
-
+import blackFavoriteIcon from '../images/blackHeartIcon.svg';
+import whiteFavoriteIcon from '../images/whiteHeartIcon.svg';
 import './CSS/startButton.css';
+import './CSS/swiper-bundle.css';
 
 function DetailCardDrink({ recommendation }) {
   const { apiData } = useContext(Context);
   const history = useHistory();
+  const { id } = useParams();
   const { location: { pathname } } = useHistory();
   const [copyUrl, setCopyUrl] = useState();
+  const [favoriteState, setFavoriteState] = useState(false);
+
+  useEffect(() => {
+    const validFavorite = JSON.parse(localStorage.getItem('favoriteRecipes')) || [];
+    if (!validFavorite) {
+      localStorage.setItem('favoriteRecipes', JSON.stringify([]));
+    } else {
+      console.log(validFavorite);
+      console.log(apiData[0]);
+      console.log(id);
+      setFavoriteState(
+        validFavorite.some((element) => element.id === id),
+      );
+    }
+  }, []);
 
   const saveFavoriteRecipe = () => {
     const favObj = {
       id: apiData[0]?.idDrink,
-      type: 'drinks',
-      nationality: apiData[0].strArea,
-      alcoholicOrNot: apiData[0].strAlcoholic,
-      name: apiData[0].strDrinks,
-      image: apiData[0].strDrinkThumb,
-      category: '',
+      type: 'drink',
+      nationality: '',
+      alcoholicOrNot: apiData[0]?.strAlcoholic,
+      name: apiData[0]?.strDrink,
+      image: apiData[0]?.strDrinkThumb,
+      category: apiData[0]?.strCategory,
     };
-    const fav = JSON.parse(localStorage.getItem('favoriteRecipe'));
+    const fav = JSON.parse(localStorage.getItem('favoriteRecipes')) || [];
     if (fav === null) {
-      localStorage.setItem('favoriteRecipe', JSON.stringify([favObj]));
+      localStorage.setItem('favoriteRecipes', JSON.stringify([favObj]));
     } else {
-      localStorage.setItem('favoriteRecipe', JSON.stringify([...fav, favObj]));
+      localStorage.setItem('favoriteRecipes', JSON.stringify([...fav, favObj]));
     }
+    setFavoriteState(!favoriteState);
   };
 
   const getUrl = async (url) => {
@@ -76,9 +94,13 @@ function DetailCardDrink({ recommendation }) {
             <button
               type="button"
               data-testid="favorite-btn"
-              onClick={ () => saveFavoriteRecipe() }
+              onClick={ saveFavoriteRecipe }
+              src={ favoriteState ? blackFavoriteIcon : whiteFavoriteIcon }
             >
-              favorite
+              <img
+                src={ favoriteState ? blackFavoriteIcon : whiteFavoriteIcon }
+                alt="favorite icon"
+              />
 
             </button>
           </div>
