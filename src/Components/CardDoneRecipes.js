@@ -1,4 +1,5 @@
-import React from 'react';
+import clipboardCopy from 'clipboard-copy';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import shareIcon from '../images/shareIcon.svg';
 // implementar função de compartilhar
@@ -17,14 +18,60 @@ import shareIcon from '../images/shareIcon.svg';
 // }]
 
 function CardDoneRecipes() {
+  const [copyUrl, setCopyUrl] = useState();
   const doneRecipes = localStorage.getItem('doneRecipes')
     ? JSON.parse(localStorage.getItem('doneRecipes'))
     : [];
+  const [newDoneRecipes, setNewDoneRecipes] = useState(doneRecipes);
+
+  const handleClick = ({ target: { value } }) => {
+    if (value !== 'All') {
+      const filterRecipes = doneRecipes.filter((recipe) => recipe.type === value);
+      setNewDoneRecipes(filterRecipes);
+    } else return setNewDoneRecipes(doneRecipes);
+  };
+
+  const getUrl = async (type, id) => {
+    const url2 = `http://localhost:3000/${type}s/${id}`;
+    const interval = 1000;
+    await clipboardCopy(url2).then(setCopyUrl(true));
+    setInterval(() => setCopyUrl(false), interval);
+    console.log(url2);
+  };
 
   return (
     <section>
-      {doneRecipes.map((recipe, index) => (
-        <div key={ index }>
+      <div>
+        <button
+          type="button"
+          name="all"
+          data-testid="filter-by-all-btn"
+          value="all"
+          onClick={ handleClick }
+        >
+          All
+        </button>
+        <button
+          type="button"
+          name="Food"
+          data-testid="filter-by-food-btn"
+          value="food"
+          onClick={ handleClick }
+        >
+          Food
+        </button>
+        <button
+          type="button"
+          name="Drinks"
+          data-testid="filter-by-drink-btn"
+          value="drink"
+          onClick={ handleClick }
+        >
+          Drinks
+        </button>
+      </div>
+      {newDoneRecipes.map((recipe, index) => (
+        <div key={ recipe.id }>
           <div>
             <Link to={ `/${recipe.type}s/${recipe.id}` }>
               <img
@@ -57,11 +104,18 @@ function CardDoneRecipes() {
           <p data-testid={ `${index}-horizontal-done-date` }>
             {recipe.doneDate }
           </p>
-          <img
-            data-testid={ `${index}-horizontal-share-btn` }
+          <button
+            type="button"
             src={ shareIcon }
-            alt="icone de compartilhar"
-          />
+            id={ index }
+            onClick={ () => getUrl(recipe.type, recipe.id) }
+          >
+            <img
+              data-testid={ `${index}-horizontal-share-btn` }
+              src={ shareIcon }
+              alt="icone de compartilhar"
+            />
+          </button>
           <ul>
             {recipe.tags.slice(0, 2).map((tagName, indexTag) => (
               <li
@@ -74,6 +128,7 @@ function CardDoneRecipes() {
           </ul>
         </div>
       ))}
+      { copyUrl && <span>Link copied!</span>}
     </section>
   );
 }

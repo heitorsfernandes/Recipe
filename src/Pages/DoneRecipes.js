@@ -7,27 +7,6 @@ function DoneRecipes() {
     <div>
       <section>
         <Header pageName="Done Recipes" search={ false } />
-        <button
-          type="button"
-          name="all"
-          data-testid="filter-by-all-btn"
-        >
-          All
-        </button>
-        <button
-          type="button"
-          name="Food"
-          data-testid="filter-by-food-btn"
-        >
-          Food
-        </button>
-        <button
-          type="button"
-          name="Drinks"
-          data-testid="filter-by-drink-btn"
-        >
-          Drinks
-        </button>
       </section>
       <section>
         <CardDoneRecipes />
