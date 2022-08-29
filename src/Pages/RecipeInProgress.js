@@ -1,9 +1,13 @@
 import React from 'react';
+import DrinkInProgress from '../Components/DrinkInProgress';
 import FoodsInProgress from '../Components/FoodsInProgress';
 
-function RecipeInProgress() {
+function RecipeInProgress({ foodInProgress }) {
   return (
-    <FoodsInProgress />
+    <div>
+      { foodInProgress ? (<FoodsInProgress />)
+        : (<DrinkInProgress />) }
+    </div>
   );
 }
 
