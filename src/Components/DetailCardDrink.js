@@ -44,9 +44,11 @@ function DetailCardDrink({ recommendation }) {
     const fav = JSON.parse(localStorage.getItem('favoriteRecipes')) || [];
     if (fav === null) {
       localStorage.setItem('favoriteRecipes', JSON.stringify([favObj]));
-    } else {
-      localStorage.setItem('favoriteRecipes', JSON.stringify([...fav, favObj]));
-    }
+    } else if (favoriteState) {
+      const favRemoved = fav.filter((element) => element.id !== id);
+      localStorage.setItem('favoriteRecipes', JSON.stringify([favRemoved]));
+    } else { localStorage.setItem('favoriteRecipes', JSON.stringify([...fav, favObj])); }
+
     setFavoriteState(!favoriteState);
   };
 
