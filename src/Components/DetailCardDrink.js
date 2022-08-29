@@ -1,14 +1,42 @@
+import clipboardCopy from 'clipboard-copy';
 import PropTypes from 'prop-types';
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import Context from '../Context/Context';
+import './CSS/swiper-bundle.css';
 
 import './CSS/startButton.css';
 
 function DetailCardDrink({ recommendation }) {
   const { apiData } = useContext(Context);
   const history = useHistory();
+  const { location: { pathname } } = useHistory();
+  const [copyUrl, setCopyUrl] = useState();
+
+  const saveFavoriteRecipe = () => {
+    const favObj = {
+      id: apiData[0]?.idDrink,
+      type: 'drinks',
+      nationality: apiData[0].strArea,
+      alcoholicOrNot: apiData[0].strAlcoholic,
+      name: apiData[0].strDrinks,
+      image: apiData[0].strDrinkThumb,
+      category: '',
+    };
+    const fav = JSON.parse(localStorage.getItem('favoriteRecipe'));
+    if (fav === null) {
+      localStorage.setItem('favoriteRecipe', JSON.stringify([favObj]));
+    } else {
+      localStorage.setItem('favoriteRecipe', JSON.stringify([...fav, favObj]));
+    }
+  };
+
+  const getUrl = async (url) => {
+    const interval = 1000;
+    await clipboardCopy(url).then(setCopyUrl(true));
+    setInterval(() => setCopyUrl(false), interval);
+  };
 
   const allIngredients = Object.keys(apiData[0] || []);
   const validIngredients = allIngredients
@@ -35,6 +63,24 @@ function DetailCardDrink({ recommendation }) {
             />
             <h2 data-testid="recipe-title">{apiData[0].strDrink}</h2>
             <p data-testid="recipe-category">{apiData[0].strAlcoholic}</p>
+          </div>
+          <div className="shareAndFav">
+            <button
+              type="button"
+              data-testid="share-btn"
+              onClick={ () => getUrl(`http://localhost:3000${pathname}`) }
+            >
+              share
+
+            </button>
+            <button
+              type="button"
+              data-testid="favorite-btn"
+              onClick={ () => saveFavoriteRecipe() }
+            >
+              favorite
+
+            </button>
           </div>
           <h3>Ingredients</h3>
           { validIngredients.map((each, index) => (
@@ -74,12 +120,7 @@ function DetailCardDrink({ recommendation }) {
             </button>
           )}
         </>)}
-      <link
-        rel="stylesheet"
-        href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css"
-      />
-
-      <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js" />
+      { copyUrl && <span>Link copied!</span>}
     </section>
 
   );

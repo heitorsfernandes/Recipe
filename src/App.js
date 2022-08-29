@@ -1,6 +1,8 @@
+import 'bootstrap/dist/css/bootstrap.min.css';
 import React from 'react';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import './App.css';
+import Provider from './Context/Provider';
 import DoneRecipes from './Pages/DoneRecipes';
 import FavoriteRecipes from './Pages/FavoriteRecipes';
 import Login from './Pages/Login';
@@ -9,11 +11,11 @@ import RecipeDetails from './Pages/RecipeDetails';
 import RecipeInProgress from './Pages/RecipeInProgress';
 import Recipes from './Pages/Recipes';
 import RecipesDrinks from './Pages/RecipesDrinks';
-import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
   return (
-    <BrowserRouter>
+
+    <Provider>
       <Switch>
         <Route exact path="/" component={ Login } />
         <Route exact path="/foods" component={ Recipes } />
@@ -32,7 +34,10 @@ function App() {
             (props) => <RecipeDetails { ...props } food={ false } />
           }
         />
-        <Route path="/foods/{id-da-receita}/in-progress" component={ RecipeInProgress } />
+        <Route
+          path="/foods/{id-da-receita}/in-progress"
+          component={ RecipeInProgress }
+        />
         <Route
           path="/drinks/{id-da-receita}/in-progress"
           component={ RecipeInProgress }
@@ -41,7 +46,8 @@ function App() {
         <Route path="/profile" component={ Profile } />
         <Route path="/favorite-recipes" component={ FavoriteRecipes } />
       </Switch>
-    </BrowserRouter>
+    </Provider>
+
   );
 }
 

@@ -1,17 +1,59 @@
+import clipboardCopy from 'clipboard-copy';
 import PropTypes from 'prop-types';
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import Context from '../Context/Context';
-import EmbedVideo from './EmbedVideo';
-
+import blackFavoriteIcon from '../images/blackHeartIcon.svg';
+import whiteFavoriteIcon from '../images/whiteHeartIcon.svg';
 import './CSS/startButton.css';
+import './CSS/swiper-bundle.css';
+import EmbedVideo from './EmbedVideo';
 
 function DetailCardFood({ recommendation }) {
   const { apiData } = useContext(Context);
   const history = useHistory();
   const youtubeId = apiData[0]?.strYoutube.split('=') || '';
-  console.log(youtubeId);
+  const { location: { pathname } } = useHistory();
+  const [copyUrl, setCopyUrl] = useState();
+  const [favoriteState, setFavoriteState] = useState(false);
+
+  useEffect(() => {
+    const validFavorite = JSON.parse(localStorage.getItem('favoriteRecipe'));
+    if (!validFavorite) {
+      localStorage.setItem('favoriteRecipe', JSON.stringify([]));
+    } else {
+      setFavoriteState(
+        validFavorite.some((element) => element.id === apiData[0]?.idMeal),
+      );
+    }
+  }, []);
+
+  const saveFavoriteRecipe = () => {
+    const favObj = {
+      id: apiData[0]?.idMeal,
+      type: 'meals',
+      nationality: apiData[0]?.strArea,
+      category: apiData[0]?.strCategory,
+      name: apiData[0]?.strMeal,
+      image: apiData[0]?.strMealThumb,
+      alcoholicOrNot: '',
+    };
+    const fav = JSON.parse(localStorage.getItem('favoriteRecipe'));
+    if (fav === null) {
+      localStorage.setItem('favoriteRecipe', JSON.stringify([favObj]));
+    } else {
+      localStorage.setItem('favoriteRecipe', JSON.stringify([...fav, favObj]));
+    }
+
+    setFavoriteState(!favoriteState);
+  };
+
+  const getUrl = async (url) => {
+    const interval = 1000;
+    await clipboardCopy(url).then(setCopyUrl(true));
+    setInterval(() => setCopyUrl(false), interval);
+  };
 
   const allIngredients = Object.keys(apiData[0] || []);
   const validIngredients = allIngredients
@@ -45,7 +87,27 @@ function DetailCardFood({ recommendation }) {
             <h2 data-testid="recipe-title">{apiData[0].strMeal}</h2>
             <p data-testid="recipe-category">{apiData[0].strCategory}</p>
           </div>
+          <div className="shareAndFav">
+            <button
+              type="button"
+              data-testid="share-btn"
+              onClick={ () => getUrl(`http://localhost:3000${pathname}`) }
+            >
+              share
 
+            </button>
+            <button
+              type="button"
+              data-testid="favorite-btn"
+              onClick={ saveFavoriteRecipe }
+            >
+              <img
+                src={ favoriteState ? blackFavoriteIcon : whiteFavoriteIcon }
+                alt="favorite icon"
+              />
+
+            </button>
+          </div>
           <h3>Ingredients</h3>
           { validIngredients.map((each, index) => (
             <div key={ each }>
@@ -86,12 +148,7 @@ function DetailCardFood({ recommendation }) {
           )}
 
         </>)}
-      <link
-        rel="stylesheet"
-        href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css"
-      />
-
-      <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js" />
+      { copyUrl && <span>Link copied!</span>}
     </section>
 
   );
