@@ -1,9 +1,10 @@
 import PropTypes from 'prop-types';
-import React, { useEffect, useContext, useState } from 'react';
-import { fetchApi } from '../Services/fetchApi';
-import Context from '../Context/Context';
-import DetailCardFood from '../Components/DetailCardFood';
+import React, { useContext, useEffect, useState } from 'react';
+import '../Components/CSS/shareFavBtn.css';
 import DetailCardDrink from '../Components/DetailCardDrink';
+import DetailCardFood from '../Components/DetailCardFood';
+import Context from '../Context/Context';
+import { fetchApi } from '../Services/fetchApi';
 
 function RecipeDetails({ match, food }) {
   const { setApiData } = useContext(Context);
@@ -14,7 +15,7 @@ function RecipeDetails({ match, food }) {
     const fetchDetail = async () => {
       if (food) {
         const response = await fetchApi('themealdb', 'lookup.php?i', id);
-        console.log(response);
+
         setApiData(response.meals);
       } else {
         const response = await fetchApi('thecocktaildb', 'lookup.php?i', id);
@@ -24,7 +25,7 @@ function RecipeDetails({ match, food }) {
     const fetchRecomendation = async () => {
       if (food) {
         const response = await fetchApi('thecocktaildb', 'search.php?s', '');
-        console.log(response);
+
         setRecommendation(response.drinks);
       } else {
         const response = await fetchApi('themealdb', 'search.php?s', '');
@@ -37,10 +38,12 @@ function RecipeDetails({ match, food }) {
   }, []);
 
   return (
-    <section>
-      { food ? (<DetailCardFood recommendation={ recommendation } />)
-        : (<DetailCardDrink recommendation={ recommendation } />) }
-    </section>
+    <div>
+      <section>
+        { food ? (<DetailCardFood recommendation={ recommendation } />)
+          : (<DetailCardDrink recommendation={ recommendation } />) }
+      </section>
+    </div>
 
   );
 }
