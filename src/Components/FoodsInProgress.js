@@ -47,7 +47,7 @@ function FoodsInProgress({ drink = false }) {
     }
   }, []);
 
-  const checkIngredient = (e) => {
+  const checkIngredient = (e) => { // função de checkar os igredientes
     if (ingredient.includes(e.target.id)) {
       const filterIngred = ingredient
         .filter((markedIngredient) => markedIngredient !== e.target.id);
