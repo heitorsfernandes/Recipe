@@ -24,9 +24,9 @@ function CardDoneRecipes() {
     : [];
   const [newDoneRecipes, setNewDoneRecipes] = useState(doneRecipes);
 
-  const handleClick = ({ target: { value } }) => {
-    if (value !== 'All') {
-      const filterRecipes = doneRecipes.filter((recipe) => recipe.type === value);
+  const handleClick = ({ target: { name } }) => {
+    if (name !== 'all') {
+      const filterRecipes = doneRecipes.filter((recipe) => recipe.type === name);
       setNewDoneRecipes(filterRecipes);
     } else return setNewDoneRecipes(doneRecipes);
   };
@@ -44,16 +44,7 @@ function CardDoneRecipes() {
       <div>
         <button
           type="button"
-          name="all"
-          data-testid="filter-by-all-btn"
-          value="all"
-          onClick={ handleClick }
-        >
-          All
-        </button>
-        <button
-          type="button"
-          name="Food"
+          name="food"
           data-testid="filter-by-food-btn"
           value="food"
           onClick={ handleClick }
@@ -62,12 +53,21 @@ function CardDoneRecipes() {
         </button>
         <button
           type="button"
-          name="Drinks"
+          name="drink"
           data-testid="filter-by-drink-btn"
           value="drink"
           onClick={ handleClick }
         >
           Drinks
+        </button>
+        <button
+          type="button"
+          name="all"
+          data-testid="filter-by-all-btn"
+          value="all"
+          onClick={ handleClick }
+        >
+          All
         </button>
       </div>
       {newDoneRecipes.map((recipe, index) => (
@@ -79,9 +79,18 @@ function CardDoneRecipes() {
                 src={ recipe.image }
                 alt={ recipe.name }
                 className="img"
+                width="300"
+                height="300"
               />
             </Link>
           </div>
+          <Link to={ `/${recipe.type}s/${recipe.id}` }>
+            <p
+              data-testid={ `${index}-horizontal-name` }
+            >
+              {recipe.name }
+            </p>
+          </Link>
           {
             recipe.type === 'food' ? (
               <p data-testid={ `${index}-horizontal-top-text` }>
@@ -94,13 +103,6 @@ function CardDoneRecipes() {
                 </p>
               )
           }
-          <Link to={ `/${recipe.type}s/${recipe.id}` }>
-            <p
-              data-testid={ `${index}-horizontal-name` }
-            >
-              {recipe.name }
-            </p>
-          </Link>
           <p data-testid={ `${index}-horizontal-done-date` }>
             {recipe.doneDate }
           </p>
