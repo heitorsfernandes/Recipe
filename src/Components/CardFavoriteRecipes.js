@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import shareIcon from '../images/shareIcon.svg';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
@@ -6,56 +6,6 @@ import blackHeartIcon from '../images/blackHeartIcon.svg';
 const copy = require('clipboard-copy');
 
 function CardFavoriteRecipes() {
-  const mockfavoriteRecipes = [{
-    id: '1',
-    type: 'foods',
-    nationality: '1',
-    category: '1',
-    alcoholicOrNot: 'non -alcoholic',
-    name: '1',
-    image: '1',
-  },
-  {
-    id: '2',
-    type: 'foods',
-    nationality: '2',
-    category: '2',
-    alcoholicOrNot: 'non- alcoholic',
-    name: '2',
-    image: '2',
-  },
-  {
-    id: '3',
-    type: 'drinks',
-    nationality: '3',
-    category: '3',
-    alcoholicOrNot: 'non - alcoholic',
-    name: '3',
-    image: '3',
-  },
-  {
-    id: '4',
-    type: 'drinks',
-    nationality: '4',
-    category: '4',
-    alcoholicOrNot: 'alcoholic',
-    name: '4',
-    image: '4',
-  },
-  {
-    id: '5',
-    type: 'foods',
-    nationality: '5',
-    category: '5',
-    alcoholicOrNot: 'non - alcoholic',
-    name: '5',
-    image: '5',
-  }];
-
-  // useEffect(() => {
-  //   localStorage.setItem('favoriteRecipes', JSON.stringify(mockfavoriteRecipes));
-  // }, []);
-
   const favoriteRecipes = localStorage.getItem('favoriteRecipes')
     ? JSON.parse(localStorage.getItem('favoriteRecipes'))
     : [];
