@@ -1,27 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import shareIcon from '../images/shareIcon.svg';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
 
-// a chave favoriteRecipes deve conter a seguinte estrutura:
-// [{
-//     id: id-da-receita,
-//     type: food-ou-drink,
-//     nationality: nacionalidade-da-receita-ou-texto-vazio,
-//     category: categoria-da-receita-ou-texto-vazio,
-//     alcoholicOrNot: alcoholic-ou-non-alcoholic-ou-texto-vazio,
-//     name: nome-da-receita,
-//     image: imagem-da-receita
-// }]
+const copy = require('clipboard-copy');
 
 function CardFavoriteRecipes() {
-//   const favoriteRecipes = localStorage.getItem('favoriteRecipes')
-//     ? JSON.parse(localStorage.getItem('favoriteRecipes'))
-//     : [];
-
-  const favoriteRecipes = [{
+  const mockfavoriteRecipes = [{
     id: '1',
-    type: 'food',
+    type: 'foods',
     nationality: '1',
     category: '1',
     alcoholicOrNot: 'non -alcoholic',
@@ -30,7 +17,7 @@ function CardFavoriteRecipes() {
   },
   {
     id: '2',
-    type: 'food',
+    type: 'foods',
     nationality: '2',
     category: '2',
     alcoholicOrNot: 'non- alcoholic',
@@ -39,7 +26,7 @@ function CardFavoriteRecipes() {
   },
   {
     id: '3',
-    type: 'drink',
+    type: 'drinks',
     nationality: '3',
     category: '3',
     alcoholicOrNot: 'non - alcoholic',
@@ -48,7 +35,7 @@ function CardFavoriteRecipes() {
   },
   {
     id: '4',
-    type: 'drink',
+    type: 'drinks',
     nationality: '4',
     category: '4',
     alcoholicOrNot: 'alcoholic',
@@ -57,7 +44,7 @@ function CardFavoriteRecipes() {
   },
   {
     id: '5',
-    type: 'food',
+    type: 'foods',
     nationality: '5',
     category: '5',
     alcoholicOrNot: 'non - alcoholic',
@@ -65,7 +52,17 @@ function CardFavoriteRecipes() {
     image: '5',
   }];
 
+  // useEffect(() => {
+  //   localStorage.setItem('favoriteRecipes', JSON.stringify(mockfavoriteRecipes));
+  // }, []);
+
+  const favoriteRecipes = localStorage.getItem('favoriteRecipes')
+    ? JSON.parse(localStorage.getItem('favoriteRecipes'))
+    : [];
+
   const [listFavoriteRecipes, setListFavoriteRecipes] = useState(favoriteRecipes);
+  const [isCopied, setIsCopied] = useState(false);
+  // const [favoriteState, setFavoriteState] = useState(false);
 
   const handleClick = ({ target: { value } }) => {
     if (value !== 'all') {
@@ -73,6 +70,18 @@ function CardFavoriteRecipes() {
         .filter((recipe) => recipe.type === value);
       setListFavoriteRecipes(filteredFavorits);
     } else return setListFavoriteRecipes(favoriteRecipes);
+  };
+
+  const handleCopy = (type, id) => {
+    const copyURL = `http://localhost:3000/${type}s/${id}`;
+    copy(copyURL);
+    setIsCopied(true);
+  };
+
+  const deleteFavoriteRecipe = (id) => {
+    const favRemoved = favoriteRecipes.filter((element) => element.id !== id);
+    setListFavoriteRecipes(favRemoved);
+    localStorage.setItem('favoriteRecipes', JSON.stringify(favRemoved));
   };
 
   return (
@@ -104,9 +113,9 @@ function CardFavoriteRecipes() {
         </button>
       </div>
       <section>
+        { isCopied === true ? <span>Link copied!</span> : <p>Not Copied!</p> }
         {listFavoriteRecipes
           .map((recipe, index) => (
-            // um botão de compartilhar e um de "desfavoritar"
             <div key={ index }>
               {
                 recipe.type === 'food' ? (
@@ -121,13 +130,14 @@ function CardFavoriteRecipes() {
                   )
               }
               <Link to={ `/${recipe.type}s/${recipe.id}` }>
-                <div data-testid={ `${index}-horizontal-image` }>
-                  <img
-                    src={ recipe.image }
-                    alt={ recipe.name }
-                    className="img"
-                  />
-                </div>
+                <img
+                  src={ recipe.image }
+                  alt={ recipe.name }
+                  data-testid={ `${index}-horizontal-image` }
+                  className="img"
+                  width="300"
+                  height="300"
+                />
               </Link>
               <Link to={ `/${recipe.type}s/${recipe.id}` }>
                 <p
@@ -138,7 +148,7 @@ function CardFavoriteRecipes() {
               </Link>
               <button
                 type="button"
-                // onClick={ handleClick }
+                onClick={ () => handleCopy(recipe.type, recipe.id) }
               >
                 <img
                   data-testid={ `${index}-horizontal-share-btn` }
@@ -148,7 +158,7 @@ function CardFavoriteRecipes() {
               </button>
               <button
                 type="button"
-                // onClick={ handleClick }
+                onClick={ () => deleteFavoriteRecipe(recipe.id) }
               >
                 <img
                   data-testid={ `${index}-horizontal-favorite-btn` }
