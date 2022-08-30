@@ -36,7 +36,6 @@ function CardDoneRecipes() {
     const interval = 1000;
     await clipboardCopy(url2).then(setCopyUrl(true));
     setInterval(() => setCopyUrl(false), interval);
-    console.log(url2);
   };
 
   return (

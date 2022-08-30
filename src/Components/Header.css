@@ -1,0 +1,27 @@
+.header-container {
+  background-color: #299936;
+  color: #dafade;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.profile-title {
+  display: flex;
+  justify-content: center;
+}
+
+.profile-title button {
+  height: 40px;
+  justify-self: start;
+}
+
+.search-bar {
+  align-self: center;
+}
+
+.input-search {
+  align-self: center;
+  width: 80%;
+}
+

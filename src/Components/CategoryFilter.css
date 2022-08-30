@@ -2,11 +2,30 @@
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
+  margin-left: 5px;
   padding: 10px;
+  width: 100%;
 }
 
 .categoryFilter button {
+  background-color: #ecffef;
+  border: #299936 2px solid;
+  border-radius: 5px;
+  box-shadow: var(--shadow-1);
+  color: #05172c;
+  cursor: pointer;
+  display: inline-block;
   flex: 15%;
   flex-basis: 80px;
-  padding: 2px;
+  font-size: 1rem;
+  letter-spacing: var(--letterSpacing);
+  margin-right: 1rem;
+  max-width: 15ch;
+  overflow: hidden;
+  padding: 0.375rem 0.75rem;
+  text-align: center;
+
+  /* transition: var(--transition); */
+  text-transform: capitalize;
+  width: 15px;
 }

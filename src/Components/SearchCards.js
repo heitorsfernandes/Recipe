@@ -2,12 +2,13 @@ import PropTypes from 'prop-types';
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import Context from '../Context/Context';
+import './SearchCards.css';
 
 function SearchCards({ pageName }) {
   const doze = 12;
   const { apiData } = useContext(Context);
   return (
-    <section>
+    <section className="searchCards-container">
       { apiData.map(
         (element, index) => {
           const route = pageName === 'foods'
@@ -25,7 +26,9 @@ function SearchCards({ pageName }) {
                     src={ element.strMealThumb }
                     alt="Recipe"
                   />
-                  <h3 data-testid={ `${index}-card-name` }>{element.strMeal}</h3>
+                </div>
+                <div>
+                  <p data-testid={ `${index}-card-name` }>{element.strMeal}</p>
                 </div>
               </Link>);
           }
@@ -42,8 +45,8 @@ function SearchCards({ pageName }) {
                   src={ element.strDrinkThumb }
                   alt="Recipe"
                 />
-                <h3 data-testid={ `${index}-card-name` }>{element.strDrink}</h3>
               </div>
+              <p data-testid={ `${index}-card-name` }>{element.strDrink}</p>
             </Link>);
         },
       ).filter((_, index) => index < doze) }

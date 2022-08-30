@@ -1,0 +1,26 @@
+.searchCards-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px , 10px;
+  justify-content: center;
+
+}
+
+.searchCards-container div {
+  color: #299936;
+  width: 100%;
+}
+
+.searchCards-container img {
+  border: 1px solid #299936;
+  width: 150px;
+}
+
+.searchCards-container div p {
+  margin-left: 20px;
+  max-width: 15ch;
+  overflow: hidden;
+  text-align: center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

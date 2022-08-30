@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
+import './Login.css';
 
 function Login({ history }) {
   const [email, setEmail] = useState('');
@@ -20,28 +21,29 @@ function Login({ history }) {
 
   return (
     <div>
-      <form>
-        <label htmlFor="email">
-          email:
-          <input
-            name="name"
-            value={ email }
-            onChange={ ({ target }) => setEmail(target.value) }
-            data-testid="email-input"
-            type="email"
-          />
-        </label>
+      <form className="login-container">
+        <h1>
+          {'Louro\'s Recipes' }
+        </h1>
+        <input
+          placeholder="email"
+          name="name"
+          value={ email }
+          onChange={ ({ target }) => setEmail(target.value) }
+          data-testid="email-input"
+          type="email"
+        />
         <br />
-        <label htmlFor="password">
-          senha:
-          <input
-            name="password"
-            value={ password }
-            onChange={ ({ target }) => setPassword(target.value) }
-            data-testid="password-input"
-            type="text"
-          />
-        </label>
+
+        <input
+          placeholder="senha"
+          name="password"
+          value={ password }
+          onChange={ ({ target }) => setPassword(target.value) }
+          data-testid="password-input"
+          type="password"
+        />
+
         <br />
         <button
           disabled={ !(email.match(validEmail) && password.length > minPassword) }

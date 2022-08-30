@@ -3,6 +3,7 @@ import React, { useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import Context from '../Context/Context';
 import { fetchData } from '../Services/fetchApi';
+import './SearchBar.css';
 
 function SearchBar({ pageName }) {
   const history = useHistory();
@@ -44,8 +45,8 @@ function SearchBar({ pageName }) {
   return (
 
     <div>
-      <form>
-        <p>
+      <form className="searchBar-container">
+        <div className="radio-search">
           <input
             type="radio"
             data-testid="ingredient-search-radio"
@@ -70,15 +71,18 @@ function SearchBar({ pageName }) {
             onChange={ handleChange }
           />
           first-letter
-        </p>
-        <p>
-          <input
+        </div>
+        <div>
+          <button
+            className="search-btn"
             type="button"
             data-testid="exec-search-btn"
             value="Search"
             onClick={ handleClick }
-          />
-        </p>
+          >
+            Search
+          </button>
+        </div>
       </form>
     </div>
   );

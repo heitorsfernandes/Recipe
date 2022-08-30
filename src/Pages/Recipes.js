@@ -25,19 +25,6 @@ function Recipes() {
       <Header pageName="Foods" />
       <SearchBar pageName="foods" />
       <CategoryFilter pageName="foods" />
-      {/* <div>
-        <button type="button" data-testid="All-category-filter">All</button>
-        {mealsCategories.map((category) => (
-          <button
-            key={ category }
-            type="button"
-            data-testid={ `${category}-category-filter` }
-          >
-            { category }
-
-          </button>
-        ))}
-        </div>  */}
       <SearchCards pageName="foods" />
       <Footer />
     </main>

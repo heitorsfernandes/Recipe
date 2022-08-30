@@ -24,9 +24,6 @@ function DetailCardFood({ recommendation }) {
     if (!validFavorite) {
       localStorage.setItem('favoriteRecipes', JSON.stringify([]));
     } else {
-      console.log(validFavorite);
-      console.log(apiData[0]);
-      console.log(id);
       setFavoriteState(
         validFavorite.some((element) => element.id === id),
       );

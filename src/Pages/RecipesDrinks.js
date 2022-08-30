@@ -6,6 +6,7 @@ import SearchBar from '../Components/SearchBar.js';
 import SearchCards from '../Components/SearchCards';
 import Context from '../Context/Context';
 import { fetchApi } from '../Services/fetchApi';
+import './RecipesDrinks.css';
 
 function RecipesDrinks() {
   const { setApiData } = useContext(Context);
@@ -25,19 +26,6 @@ function RecipesDrinks() {
       <Header pageName="Drinks" />
       <SearchBar pageName="drinks" />
       <CategoryFilter pageName="drinks" />
-      { /* <div>
-        <button type="button" data-testid="All-category-filter">All</button>
-        {drinksCategories.map((category) => (
-          <button
-            key={ category }
-            type="button"
-            data-testid={ `${category}-category-filter` }
-          >
-            { category }
-
-          </button>
-        ))}
-        </div> */}
       <SearchCards pageName="drinks" />
       <Footer />
     </main>
