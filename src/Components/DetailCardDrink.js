@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 import React, { useContext, useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/swiper-bundle.css';
 import Context from '../Context/Context';
 import blackFavoriteIcon from '../images/blackHeartIcon.svg';
 import whiteFavoriteIcon from '../images/whiteHeartIcon.svg';
 import './CSS/startButton.css';
-import './CSS/swiper-bundle.css';
 
 function DetailCardDrink({ recommendation }) {
   const { apiData } = useContext(Context);
