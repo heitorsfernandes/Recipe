@@ -121,46 +121,7 @@ function DrinkInProgress({ drink = true }) {
       </button>
     </div>
   );
-  // const mealRecipe = (
-  //   <div>
-  //     <img
-  //       src={ recipe.strMealThumb }
-  //       data-testid="recipe-photo"
-  //       alt="foto recipe"
-  //       width="100px"
-  //     />
-  //     <h1 data-testid="recipe-title">{recipe.strMeal}</h1>
-  //     <button
-  //       type="button"
-  //       data-testid="share-btn"
-  //       onClick={ () => {
-  //         setShare(true);
-  //         copy(`http://localhost:3000/foods/${id}`);
-  //       } }
-  //     >
-  //       Share Recipe
-  //     </button>
-  //     {
-  //       share ? linkCopied : ''
-  //     }
-  //     <button
-  //       type="button"
-  //       data-testid="favorite-btn"
-  //     >
-  //       Favorite Recipe
-  //     </button>
-  //     <p data-testid="recipe-category">{recipe.strCategory}</p>
-  //     <p data-testid="instructions">{recipe.strInstructions}</p>
-  //     <button
-  //       type="button"
-  //       data-testid="finish-recipe-btn"
-  //       disabled={ ingredient.length !== recipeIngredients.length }
-  //       onClick={ () => { history.push('/done-recipes'); } }
-  //     >
-  //       Finish Recipe
-  //     </button>
-  //   </div>
-  // );
+
   return (
     <div>
 
