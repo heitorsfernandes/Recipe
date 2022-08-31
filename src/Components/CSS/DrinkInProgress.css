@@ -1,0 +1,30 @@
+.swiper-container {
+  margin-bottom: 15px;
+}
+
+.recipe-name {
+  background-color: #299936;
+}
+
+.recipe-name img {
+  border: 1px solid  #299936;
+  width: 100%;
+}
+
+.recipe-name p {
+  color: white;
+  text-align: center;
+}
+
+.recipe-name h2 {
+  color: #7de68b;
+  text-align: center;
+}
+
+.ingredients-container h3 {
+  color: #299936;
+}
+
+.instructions-container h3 {
+  color: #299936;
+}

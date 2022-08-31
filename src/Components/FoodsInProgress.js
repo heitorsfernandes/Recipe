@@ -6,6 +6,8 @@ import blackFavoriteIcon from '../images/blackHeartIcon.svg';
 import whiteFavoriteIcon from '../images/whiteHeartIcon.svg';
 import { drinkAPI, recipeAPI } from '../Services/fetchApiRecipe';
 import LocalStorageIngredients from '../Services/LocalStorageIngredients';
+import './CSS/DrinkInProgress.css';
+import './CSS/startButton.css';
 
 function FoodsInProgress({ drink = false }) {
   const { id } = useParams(); // para acessar o parâmetro e obter a url
@@ -123,13 +125,15 @@ function FoodsInProgress({ drink = false }) {
 
   const mealRecipe = (
     <div>
-      <img
-        src={ recipe.strMealThumb }
-        data-testid="recipe-photo"
-        alt="foto recipe"
-        width="100px"
-      />
-      <h1 data-testid="recipe-title">{recipe.strMeal}</h1>
+      <div className="recipe-name">
+        <img
+          src={ recipe.strMealThumb }
+          data-testid="recipe-photo"
+          alt="foto recipe"
+          width="100px"
+        />
+        <h1 data-testid="recipe-title">{recipe.strMeal}</h1>
+      </div>
       <div className="shareAndFav">
         <button
           type="button"
@@ -138,6 +142,7 @@ function FoodsInProgress({ drink = false }) {
         >
           share
         </button>
+        { copyUrl && <span>Link copied!</span>}
         <button
           type="button"
           data-testid="favorite-btn"
@@ -153,6 +158,7 @@ function FoodsInProgress({ drink = false }) {
       <p data-testid="recipe-category">{recipe.strCategory}</p>
       <p data-testid="instructions">{recipe.strInstructions}</p>
       <button
+        className="start-button"
         type="button"
         data-testid="finish-recipe-btn"
         disabled={ ingredient.length !== recipeIngredients.length }
@@ -160,11 +166,11 @@ function FoodsInProgress({ drink = false }) {
       >
         Finish Recipe
       </button>
-      { copyUrl && <span>Link copied!</span>}
+      <h3>Ingredients</h3>
     </div>
   );
   return (
-    <div>
+    <div className="ingredients-container">
       { drink ? drinkRecipe : mealRecipe }
       {
         recipeIngredients.map((elemIngredients, index) => (

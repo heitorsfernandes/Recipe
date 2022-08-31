@@ -6,6 +6,8 @@ import blackFavoriteIcon from '../images/blackHeartIcon.svg';
 import whiteFavoriteIcon from '../images/whiteHeartIcon.svg';
 import { drinkAPI } from '../Services/fetchApiRecipe';
 import LocalStorageIngredients from '../Services/LocalStorageIngredients';
+import './CSS/DrinkInProgress.css';
+import './CSS/startButton.css';
 
 function DrinkInProgress({ drink = true }) {
   const { id } = useParams(); // para acessar o parâmetro e obter a url
@@ -95,7 +97,6 @@ function DrinkInProgress({ drink = true }) {
       const favRemoved = fav.filter((element) => element.id !== id);
       localStorage.setItem('favoriteRecipes', JSON.stringify([favRemoved]));
     } else { localStorage.setItem('favoriteRecipes', JSON.stringify([...fav, favObj])); }
-
     setFavoriteState(!favoriteState);
   };
 
@@ -107,7 +108,7 @@ function DrinkInProgress({ drink = true }) {
 
   return (
     <div>
-      <div>
+      <div className="recipe-name">
         <img
           src={ recipe.strDrinkThumb }
           data-testid="recipe-photo"
@@ -115,6 +116,8 @@ function DrinkInProgress({ drink = true }) {
           width="100px"
         />
         <h1 data-testid="recipe-title">{recipe.strDrink}</h1>
+      </div>
+      <div className="shareAndFav">
         <button
           type="button"
           data-testid="share-btn"
@@ -122,6 +125,7 @@ function DrinkInProgress({ drink = true }) {
         >
           Share
         </button>
+        { copyUrl && <span>Link copied!</span>}
         <button
           type="button"
           data-testid="favorite-btn"
@@ -133,9 +137,12 @@ function DrinkInProgress({ drink = true }) {
             alt="favorite icon"
           />
         </button>
-        <p data-testid="recipe-category">{recipe.strCategory}</p>
-        <p data-testid="instructions">{recipe.strInstructions}</p>
+      </div>
+      <p data-testid="recipe-category">{recipe.strCategory}</p>
+      <p data-testid="instructions">{recipe.strInstructions}</p>
+      <div className="startButton-container">
         <button
+          className="start-button"
           type="button"
           data-testid="finish-recipe-btn"
           disabled={ ingredient.length !== recipeIngredients.length }
@@ -143,18 +150,20 @@ function DrinkInProgress({ drink = true }) {
         >
           Finish Recipe
         </button>
-        { copyUrl && <span>Link copied!</span>}
       </div>
-      {
-        recipeIngredients.map((elemIngredients, index) => (
-          <p
-            data-testid={ `${index}-ingredient-step` }
-            key={ index }
-          >
-            {elemIngredients}
-          </p>
-        ))
-      }
+      <div className="ingredients-container">
+        <h3>Ingredients</h3>
+        {
+          recipeIngredients.map((elemIngredients, index) => (
+            <p
+              data-testid={ `${index}-ingredient-step` }
+              key={ index }
+            >
+              {elemIngredients}
+            </p>
+          ))
+        }
+      </div>
     </div>
   );
 }
