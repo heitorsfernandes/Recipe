@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
+import louroJose from '../images/louroJose.png';
 import './Login.css';
 
 function Login({ history }) {
@@ -22,6 +23,7 @@ function Login({ history }) {
   return (
     <div>
       <form className="login-container">
+        <img className="louro-img" src={ louroJose } alt="louro-José" />
         <h1>
           {'Louro\'s Recipes' }
         </h1>

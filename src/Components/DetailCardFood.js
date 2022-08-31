@@ -8,6 +8,7 @@ import Context from '../Context/Context';
 import blackFavoriteIcon from '../images/blackHeartIcon.svg';
 import whiteFavoriteIcon from '../images/whiteHeartIcon.svg';
 import './CSS/startButton.css';
+import './DetailCardFood.css';
 import EmbedVideo from './EmbedVideo';
 
 function DetailCardFood({ recommendation }) {
@@ -78,7 +79,7 @@ function DetailCardFood({ recommendation }) {
     <section>
       {apiData[0] && (
         <>
-          <div>
+          <div className="recipe-name">
             <img
               src={
                 apiData[0].strMealThumb
@@ -112,43 +113,49 @@ function DetailCardFood({ recommendation }) {
 
             </button>
           </div>
-          <h3>Ingredients</h3>
-          { validIngredients.map((each, index) => (
-            <div key={ each }>
-              <span data-testid={ `${index}-ingredient-name-and-measure` }>
-                {apiData[0][each]}
-                -
-                {apiData[0][`strMeasure${index + 1}`]}
-              </span>
-              <br />
-            </div>
-          )) }
-          <div>
+          <div className="ingredients-container">
+            <h3>Ingredients</h3>
+            { validIngredients.map((each, index) => (
+              <div key={ each }>
+                <span data-testid={ `${index}-ingredient-name-and-measure` }>
+                  {apiData[0][each]}
+                  -
+                  {apiData[0][`strMeasure${index + 1}`]}
+                </span>
+                <br />
+              </div>
+            )) }
+          </div>
+          <div className="instructions-container">
             <h3>Instruções</h3>
             <p data-testid="instructions">{apiData[0].strInstructions}</p>
           </div>
           <EmbedVideo embedId={ youtubeId } />
-          <Swiper slidesPerView={ 1 }>
-            {sixRecommendations.map((rec, index) => (
-              <SwiperSlide key={ rec } data-testid={ `${index}-recomendation-card` }>
-                <img src={ rec.strDrinkThumb } alt={ rec.strDrink } width="100%" />
-                <span
-                  data-testid={ `${index}-recomendation-title` }
-                >
-                  {rec.strDrink}
-                </span>
-              </SwiperSlide>
-            ))}
-          </Swiper>
+          <div className="swiper-container">
+            <Swiper slidesPerView={ 1 }>
+              {sixRecommendations.map((rec, index) => (
+                <SwiperSlide key={ rec } data-testid={ `${index}-recomendation-card` }>
+                  <img src={ rec.strDrinkThumb } alt={ rec.strDrink } width="100%" />
+                  <span
+                    data-testid={ `${index}-recomendation-title` }
+                  >
+                    {rec.strDrink}
+                  </span>
+                </SwiperSlide>
+              ))}
+            </Swiper>
+          </div>
           { !isDone && (
-            <button
-              className="start-button"
-              type="button"
-              data-testid="start-recipe-btn"
-              onClick={ () => history.push(`/foods/${apiData[0].idMeal}/in-progress`) }
-            >
-              {!isInProgress ? 'Continue Recipe' : 'Start Recipe'}
-            </button>
+            <div className="startButton-container">
+              <button
+                className="start-button"
+                type="button"
+                data-testid="start-recipe-btn"
+                onClick={ () => history.push(`/foods/${apiData[0].idMeal}/in-progress`) }
+              >
+                {!isInProgress ? 'Continue Recipe' : 'Start Recipe'}
+              </button>
+            </div>
           )}
 
         </>)}
