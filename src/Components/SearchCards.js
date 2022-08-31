@@ -46,7 +46,13 @@ function SearchCards({ pageName }) {
                   alt="Recipe"
                 />
               </div>
-              <p data-testid={ `${index}-card-name` }>{element.strDrink}</p>
+              <p
+                className="drink-title"
+                data-testid={ `${index}-card-name` }
+              >
+                {element.strDrink}
+
+              </p>
             </Link>);
         },
       ).filter((_, index) => index < doze) }

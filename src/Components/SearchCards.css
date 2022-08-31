@@ -24,3 +24,14 @@
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+
+.drink-title {
+  color: #299936;
+  margin-left: 20px;
+  max-width: 15ch;
+  overflow: hidden;
+  text-align: center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+}
