@@ -1,9 +1,7 @@
 import clipboardCopy from 'clipboard-copy';
 import PropTypes from 'prop-types';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
-import Context from '../Context/Context';
-
 import blackFavoriteIcon from '../images/blackHeartIcon.svg';
 import whiteFavoriteIcon from '../images/whiteHeartIcon.svg';
 import { drinkAPI, recipeAPI } from '../Services/fetchApiRecipe';
@@ -15,9 +13,8 @@ function FoodsInProgress({ drink = false }) {
   const [ingredient, setIngredient] = useState([]);
   const [copyUrl, setCopyUrl] = useState();
   const [favoriteState, setFavoriteState] = useState(false);
-  const { apiData } = useContext(Context);
+  // const { apiData } = useContext(Context);
   const history = useHistory();
-  console.log(apiData);
 
   useEffect(() => {
     const validFavorite = JSON.parse(localStorage.getItem('favoriteRecipes')) || [];
@@ -54,12 +51,14 @@ function FoodsInProgress({ drink = false }) {
       setRecipe(results.meals[0]);
     };
     mealRecipe();
+
     if (!JSON.parse(localStorage.getItem('inProgressRecipes'))) {
       return localStorage.setItem('inProgressRecipes',
         JSON.stringify({ cocktails: {}, meals: {} }));
     }
     const getCheckedMeals = JSON.parse(localStorage.getItem('inProgressRecipes'));
     if (getCheckedMeals.meals[id]) {
+      console.log('line 64');
       setIngredient(getCheckedMeals.meals[id]);
     }
   }, []);
@@ -96,35 +95,15 @@ function FoodsInProgress({ drink = false }) {
 
   const saveFavoriteRecipe = () => {
     const favObj = {
-      id: apiData[0]?.idMeal,
+      id: recipe?.idMeal,
       type: 'food',
-      nationality: apiData[0]?.strArea,
-      category: apiData[0]?.strCategory,
-      name: apiData[0]?.strMeal,
-      image: apiData[0]?.strMealThumb,
+      nationality: recipe?.strArea,
+      category: recipe?.strCategory,
+      name: recipe?.strMeal,
+      image: recipe?.strMealThumb,
       alcoholicOrNot: '',
     };
-    const fav = JSON.parse(localStorage.getItem('favoriteRecipes')) || [];
-    if (fav === null) {
-      localStorage.setItem('favoriteRecipes', JSON.stringify([favObj]));
-    } else if (favoriteState) {
-      const favRemoved = fav.filter((element) => element.id !== id);
-      localStorage.setItem('favoriteRecipes', JSON.stringify([favRemoved]));
-    } else { localStorage.setItem('favoriteRecipes', JSON.stringify([...fav, favObj])); }
 
-    setFavoriteState(!favoriteState);
-  };
-
-  const saveFavoriteDrink = () => {
-    const favObj = {
-      id: apiData[0]?.idDrink,
-      type: 'drink',
-      nationality: '',
-      category: apiData[0]?.strCategory,
-      name: apiData[0]?.strDrink,
-      image: apiData[0]?.strDrinkThumb,
-      alcoholicOrNot: apiData[0].strAlcoholic,
-    };
     const fav = JSON.parse(localStorage.getItem('favoriteRecipes')) || [];
     if (fav === null) {
       localStorage.setItem('favoriteRecipes', JSON.stringify([favObj]));
@@ -142,51 +121,6 @@ function FoodsInProgress({ drink = false }) {
     setInterval(() => setCopyUrl(false), interval);
   };
 
-  const drinkRecipe = (
-    <div>
-      <img
-        src={ recipe.strDrinkThumb }
-        data-testid="recipe-photo"
-        alt="foto recipe"
-        width="100px"
-      />
-      <h1 data-testid="recipe-title">{recipe.strDrink}</h1>
-      <p data-testid="recipe-category">{recipe.strCategory}</p>
-      <div className="shareAndFav">
-        <button
-          type="button"
-          data-testid="share-btn"
-          onClick={ () => getUrl(`http://localhost:3000/drinks/${id}`) }
-        >
-          share
-
-        </button>
-        <button
-          type="button"
-          data-testid="favorite-btn"
-          onClick={ saveFavoriteDrink }
-          src={ favoriteState ? blackFavoriteIcon : whiteFavoriteIcon }
-        >
-
-          <img
-            src={ favoriteState ? blackFavoriteIcon : whiteFavoriteIcon }
-            alt="favorite icon"
-          />
-
-        </button>
-      </div>
-      <p data-testid="instructions">{recipe.strInstructions}</p>
-      <button
-        type="button"
-        data-testid="finish-recipe-btn"
-        disabled={ ingredient.length !== recipeIngredients.length }
-        onClick={ () => { history.push('/done-recipes'); } }
-      >
-        Finish Recipe
-      </button>
-      { copyUrl && <span>Link copied!</span>}
-    </div>
-  );
   const mealRecipe = (
     <div>
       <img
@@ -203,7 +137,6 @@ function FoodsInProgress({ drink = false }) {
           onClick={ () => getUrl(`http://localhost:3000/foods/${id}`) }
         >
           share
-
         </button>
         <button
           type="button"
@@ -211,12 +144,10 @@ function FoodsInProgress({ drink = false }) {
           onClick={ saveFavoriteRecipe }
           src={ favoriteState ? blackFavoriteIcon : whiteFavoriteIcon }
         >
-
           <img
             src={ favoriteState ? blackFavoriteIcon : whiteFavoriteIcon }
             alt="favorite icon"
           />
-
         </button>
       </div>
       <p data-testid="recipe-category">{recipe.strCategory}</p>
@@ -234,10 +165,7 @@ function FoodsInProgress({ drink = false }) {
   );
   return (
     <div>
-
-      {
-        drink ? drinkRecipe : mealRecipe
-      }
+      { drink ? drinkRecipe : mealRecipe }
       {
         recipeIngredients.map((elemIngredients, index) => (
           <p
@@ -251,9 +179,8 @@ function FoodsInProgress({ drink = false }) {
     </div>
   );
 }
+export default FoodsInProgress;
 
 FoodsInProgress.propTypes = {
   drink: PropTypes.bool.isRequired,
 };
-
-export default FoodsInProgress;

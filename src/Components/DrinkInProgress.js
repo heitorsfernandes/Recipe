@@ -1,17 +1,30 @@
+import clipboardCopy from 'clipboard-copy';
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
-import { drinkAPI, recipeAPI } from '../Services/fetchApiRecipe';
+import blackFavoriteIcon from '../images/blackHeartIcon.svg';
+import whiteFavoriteIcon from '../images/whiteHeartIcon.svg';
+import { drinkAPI } from '../Services/fetchApiRecipe';
 import LocalStorageIngredients from '../Services/LocalStorageIngredients';
-
-const copy = require('clipboard-copy');
 
 function DrinkInProgress({ drink = true }) {
   const { id } = useParams(); // para acessar o parâmetro e obter a url
   const [recipe, setRecipe] = useState([]);
   const [ingredient, setIngredient] = useState([]);
-  const [share, setShare] = useState([]);
   const history = useHistory();
+  const [copyUrl, setCopyUrl] = useState();
+  const [favoriteState, setFavoriteState] = useState(false);
+
+  useEffect(() => {
+    const validFavorite = JSON.parse(localStorage.getItem('favoriteRecipes')) || [];
+    if (!validFavorite) {
+      localStorage.setItem('favoriteRecipes', JSON.stringify([]));
+    } else {
+      setFavoriteState(
+        validFavorite.some((element) => element.id === id),
+      );
+    }
+  }, []);
 
   useEffect(() => {
     if (drink) { // se for bebida acessa o id da API
@@ -20,30 +33,14 @@ function DrinkInProgress({ drink = true }) {
         setRecipe(results.drinks[0]);
       };
       drinkRecipe();
-
       if (!JSON.parse(localStorage.getItem('inProgressRecipes'))) {
         return localStorage.setItem('inProgressRecipes',
-          JSON.stringify({ cocktails: {}, meals: {} }));
+          JSON.stringify({ cocktails: {} }));
       }
       const getCheckedDrinks = JSON.parse(localStorage.getItem('inProgressRecipes'));
       if (getCheckedDrinks.cocktails[id]) {
         setIngredient(getCheckedDrinks.cocktails[id]);
       }
-      return;
-    }
-
-    const mealRecipe = async () => {
-      const results = await recipeAPI(id);
-      setRecipe(results.meals[0]);
-    };
-    mealRecipe();
-    if (!JSON.parse(localStorage.getItem('inProgressRecipes'))) {
-      return localStorage.setItem('inProgressRecipes',
-        JSON.stringify({ cocktails: {}, meals: {} }));
-    }
-    const getCheckedMeals = JSON.parse(localStorage.getItem('inProgressRecipes'));
-    if (getCheckedMeals.meals[id]) {
-      setIngredient(getCheckedMeals.meals[id]);
     }
   }, []);
 
@@ -77,57 +74,77 @@ function DrinkInProgress({ drink = true }) {
       </label>
     ));
 
-  const linkCopied = (
-    <span>Link copied!</span>
-  );
+  if (recipe.length === 0) {
+    return <p>Loading...</p>;
+  }
 
-  const drinkRecipe = (
-    <div>
-      <img
-        src={ recipe.strDrinkThumb }
-        data-testid="recipe-photo"
-        alt="foto recipe"
-        width="100px"
-      />
-      <h1 data-testid="recipe-title">{recipe.strDrink}</h1>
-      <button
-        type="button"
-        data-testid="share-btn"
-        onClick={ () => {
-          setShare(true);
-          copy(`http://localhost:3000/drinks/${id}`);
-        } }
-      >
-        Share Recipe
-      </button>
-      {
-        share ? linkCopied : ''
-      }
-      <button
-        type="button"
-        data-testid="favorite-btn"
-      >
-        Favorite Recipe
-      </button>
-      <p data-testid="recipe-category">{recipe.strCategory}</p>
-      <p data-testid="instructions">{recipe.strInstructions}</p>
-      <button
-        type="button"
-        data-testid="finish-recipe-btn"
-        disabled={ ingredient.length !== recipeIngredients.length }
-        onClick={ () => { history.push('/done-recipes'); } }
-      >
-        Finish Recipe
-      </button>
-    </div>
-  );
+  const saveFavoriteRecipe = () => {
+    const favObj = {
+      id: recipe?.idDrink,
+      type: 'drink',
+      nationality: '',
+      alcoholicOrNot: recipe?.strAlcoholic,
+      name: recipe?.strDrink,
+      image: recipe?.strDrinkThumb,
+      category: recipe?.strCategory,
+    };
+    const fav = JSON.parse(localStorage.getItem('favoriteRecipes')) || [];
+    if (fav === null) {
+      localStorage.setItem('favoriteRecipes', JSON.stringify([favObj]));
+    } else if (favoriteState) {
+      const favRemoved = fav.filter((element) => element.id !== id);
+      localStorage.setItem('favoriteRecipes', JSON.stringify([favRemoved]));
+    } else { localStorage.setItem('favoriteRecipes', JSON.stringify([...fav, favObj])); }
+
+    setFavoriteState(!favoriteState);
+  };
+
+  const getUrl = async (url) => {
+    const interval = 1000;
+    await clipboardCopy(url).then(setCopyUrl(true));
+    setInterval(() => setCopyUrl(false), interval);
+  };
 
   return (
     <div>
-
-      {
-        drink ? drinkRecipe : null
-      }
+      <div>
+        <img
+          src={ recipe.strDrinkThumb }
+          data-testid="recipe-photo"
+          alt="foto recipe"
+          width="100px"
+        />
+        <h1 data-testid="recipe-title">{recipe.strDrink}</h1>
+        <button
+          type="button"
+          data-testid="share-btn"
+          onClick={ () => getUrl(`http://localhost:3000/drinks/${id}`) }
+        >
+          Share
+        </button>
+        <button
+          type="button"
+          data-testid="favorite-btn"
+          onClick={ saveFavoriteRecipe }
+          src={ favoriteState ? blackFavoriteIcon : whiteFavoriteIcon }
+        >
+          <img
+            src={ favoriteState ? blackFavoriteIcon : whiteFavoriteIcon }
+            alt="favorite icon"
+          />
+        </button>
+        <p data-testid="recipe-category">{recipe.strCategory}</p>
+        <p data-testid="instructions">{recipe.strInstructions}</p>
+        <button
+          type="button"
+          data-testid="finish-recipe-btn"
+          disabled={ ingredient.length !== recipeIngredients.length }
+          onClick={ () => { history.push('/done-recipes'); } }
+        >
+          Finish Recipe
+        </button>
+        { copyUrl && <span>Link copied!</span>}
+      </div>
       {
         recipeIngredients.map((elemIngredients, index) => (
           <p

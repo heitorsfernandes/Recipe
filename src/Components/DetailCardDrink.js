@@ -71,6 +71,9 @@ function DetailCardDrink({ recommendation }) {
   const recipeDone = JSON.parse(localStorage.getItem('doneRecipes')) || [];
   const isDone = recipeDone.some((element) => element.id === apiData[0]?.idDrink);
 
+  if (apiData.length === 0) {
+    return <p>Loading...</p>;
+  }
   return (
     <section>
       {apiData[0] && (
