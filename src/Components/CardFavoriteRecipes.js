@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import shareIcon from '../images/shareIcon.svg';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
+import './CardFavoriteRecipes.css';
 
 const copy = require('clipboard-copy');
 
@@ -36,7 +37,7 @@ function CardFavoriteRecipes() {
 
   return (
     <>
-      <div>
+      <div className="categoryFavorites">
         <button
           type="button"
           data-testid="filter-by-food-btn"
@@ -62,8 +63,10 @@ function CardFavoriteRecipes() {
           All
         </button>
       </div>
-      <section>
-        { isCopied === true ? <span>Link copied!</span> : <p>Not Copied!</p> }
+      { isCopied === true
+        ? <span className="copy">Link copied!</span>
+        : <span className="copy">Not Copied!</span> }
+      <section className="searchCards-containerZ">
         {listFavoriteRecipes
           .map((recipe, index) => (
             <div key={ index }>
@@ -85,8 +88,8 @@ function CardFavoriteRecipes() {
                   alt={ recipe.name }
                   data-testid={ `${index}-horizontal-image` }
                   className="img"
-                  width="300"
-                  height="300"
+                  width="200"
+                  height="200"
                 />
               </Link>
               <Link to={ `/${recipe.type}s/${recipe.id}` }>
