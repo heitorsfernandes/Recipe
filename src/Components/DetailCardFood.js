@@ -21,7 +21,7 @@ function DetailCardFood({ recommendation }) {
   const [favoriteState, setFavoriteState] = useState(false);
 
   useEffect(() => {
-    const validFavorite = JSON.parse(localStorage.getItem('favoriteRecipes')) || [];
+    const validFavorite = JSON.parse(localStorage.getItem('favoriteRecipes')) || []; // carregar a pagina e check esta no localStorade
     if (!validFavorite) {
       localStorage.setItem('favoriteRecipes', JSON.stringify([]));
     } else {
@@ -31,7 +31,7 @@ function DetailCardFood({ recommendation }) {
     }
   }, []);
 
-  const saveFavoriteRecipe = () => {
+  const saveFavoriteRecipe = () => { // Click para favoritar e desfavoritar
     const favObj = {
       id: apiData[0]?.idMeal,
       type: 'food',
@@ -41,7 +41,7 @@ function DetailCardFood({ recommendation }) {
       image: apiData[0]?.strMealThumb,
       alcoholicOrNot: '',
     };
-    const fav = JSON.parse(localStorage.getItem('favoriteRecipes')) || [];
+    const fav = JSON.parse(localStorage.getItem('favoriteRecipes')) || []; // condição de favoritar e desfavoritar
     if (fav === null) {
       localStorage.setItem('favoriteRecipes', JSON.stringify([favObj]));
     } else if (favoriteState) {
@@ -52,7 +52,7 @@ function DetailCardFood({ recommendation }) {
     setFavoriteState(!favoriteState);
   };
 
-  const getUrl = async (url) => {
+  const getUrl = async (url) => { // Lógica clipboard
     const interval = 1000;
     await clipboardCopy(url).then(setCopyUrl(true));
     setInterval(() => setCopyUrl(false), interval);
@@ -91,6 +91,8 @@ function DetailCardFood({ recommendation }) {
             <p data-testid="recipe-category">{apiData[0].strCategory}</p>
           </div>
           <div className="shareAndFav">
+            {' '}
+            {/* 92 a 114 -> inserir no foodsInProgress */}
             <button
               type="button"
               data-testid="share-btn"

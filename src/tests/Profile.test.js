@@ -1,7 +1,6 @@
 import { screen } from '@testing-library/react';
 import userEvent from "@testing-library/user-event";
 import React from 'react';
-import Profile from '../Pages/Profile';
 import renderWithRouter from '../renderWithRouter';
 
 describe('Teste Profile.js', () => {
