@@ -1,8 +1,9 @@
 import { screen } from '@testing-library/react';
 import userEvent from "@testing-library/user-event";
 import React from 'react';
-import Profile from '../Pages/Profile';
 import renderWithRouter from '../renderWithRouter';
+import Profile from '../Pages/Profile';
+import Provider from '../Context/Provider';
 
 describe('Teste Profile.js', () => {
 
@@ -13,11 +14,11 @@ describe('Teste Profile.js', () => {
     })
     
     it('Teste de renderização dos elementos corretamente na página ', () => {
-      renderWithRouter(<Profile />);
+      renderWithRouter(<Provider><Profile /></Provider>);
       const p = screen.getByText(/email/i);
       const btnDone = screen.getByText(/done recipes/i)
-      const btnFavorite = screen.getAllByTestId('profile-favorite-btn');
-      const btnLogout = screen.getAllByTestId('profile-logout-btn');
+      const btnFavorite = screen.getByTestId('profile-favorite-btn');
+      const btnLogout = screen.getByTestId('profile-logout-btn');
 
       expect(p).toBeInTheDocument();
 
