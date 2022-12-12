@@ -117,6 +117,30 @@ function FoodsInProgress({ drink = false }) {
     setFavoriteState(!favoriteState);
   };
 
+  const doneRecipe = () => {
+    const newD = new Date();
+    const date = `${newD.getDate()}/${newD.getMonth() + 1}/${newD.getFullYear()}`;
+    const doneObj = {
+      id: recipe?.idMeal,
+      type: 'food',
+      nationality: recipe?.strArea,
+      category: recipe?.strCategory,
+      alcoholicOrNot: '',
+      name: recipe?.strMeal,
+      image: recipe?.strMealThumb,
+      doneDate: date,
+      tags: [recipe?.strTags],
+    };
+    const doneLocal = JSON.parse(localStorage.getItem('doneRecipes')) || [];
+    if (doneLocal === null) {
+      localStorage.setItem('doneRecipes', JSON.stringify([doneObj]));
+    } else {
+      localStorage.setItem('doneRecipes', JSON.stringify([...doneLocal, doneObj]));
+    }
+
+    history.push('/done-recipes');
+  };
+
   const getUrl = async (url) => {
     const interval = 1000;
     await clipboardCopy(url).then(setCopyUrl(true));
@@ -162,7 +186,7 @@ function FoodsInProgress({ drink = false }) {
         type="button"
         data-testid="finish-recipe-btn"
         disabled={ ingredient.length !== recipeIngredients.length }
-        onClick={ () => { history.push('/done-recipes'); } }
+        onClick={ () => doneRecipe() }
       >
         Finish Recipe
       </button>

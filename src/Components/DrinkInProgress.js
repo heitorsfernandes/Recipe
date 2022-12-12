@@ -100,6 +100,30 @@ function DrinkInProgress({ drink = true }) {
     setFavoriteState(!favoriteState);
   };
 
+  const doneRecipe = () => {
+    const newD = new Date();
+    const date = `${newD.getDate()}/${newD.getMonth() + 1}/${newD.getFullYear()}`;
+    const doneObj = {
+      id: recipe?.idDrink,
+      type: 'drink',
+      nationality: '',
+      category: '',
+      alcoholicOrNot: recipe?.strAlcoholic,
+      name: recipe?.strDrink,
+      image: recipe?.strDrinkThumb,
+      doneDate: date,
+      tags: [recipe?.strTags],
+    };
+    const doneLocal = JSON.parse(localStorage.getItem('doneRecipes')) || [];
+    if (doneLocal === null) {
+      localStorage.setItem('doneRecipes', JSON.stringify([doneObj]));
+    } else {
+      localStorage.setItem('doneRecipes', JSON.stringify([...doneLocal, doneObj]));
+    }
+
+    history.push('/done-recipes');
+  };
+
   const getUrl = async (url) => {
     const interval = 1000;
     await clipboardCopy(url).then(setCopyUrl(true));
@@ -146,7 +170,7 @@ function DrinkInProgress({ drink = true }) {
           type="button"
           data-testid="finish-recipe-btn"
           disabled={ ingredient.length !== recipeIngredients.length }
-          onClick={ () => { history.push('/done-recipes'); } }
+          onClick={ () => doneRecipe() }
         >
           Finish Recipe
         </button>
