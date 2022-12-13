@@ -10,7 +10,6 @@ import './Recipes.css';
 
 function Recipes() {
   const { setApiData } = useContext(Context);
-  // const mealsCategories = ['Beef', 'Breakfast', 'Chicken', 'Dessert', 'Goat'];
   useEffect(() => {
     const newFetch = async () => {
       const data = await fetchApi('themealdb', 'search.php?s', '');

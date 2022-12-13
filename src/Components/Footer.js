@@ -1,5 +1,4 @@
 import React from 'react';
-// import { getDropdownMenuPlacement } from 'react-bootstrap/esm/DropdownMenu';
 import { Link } from 'react-router-dom';
 import drinkIcon from '../images/drinkIcon.svg';
 import mealIcon from '../images/mealIcon.svg';

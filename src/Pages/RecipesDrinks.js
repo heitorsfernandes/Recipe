@@ -10,8 +10,6 @@ import './RecipesDrinks.css';
 
 function RecipesDrinks() {
   const { setApiData } = useContext(Context);
-  /* const drinksCategories = [
-    'Ordinary Drink', 'Cocktail', 'Shake', 'Other/Unknown', 'Cocoa']; */
 
   useEffect(() => {
     const newFetch = async () => {

@@ -2,6 +2,7 @@ import clipboardCopy from 'clipboard-copy';
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import shareIcon from '../images/shareIcon.svg';
+import './CardDoneRecipes.css';
 // implementar função de compartilhar
 // a chave do doneRecipes vem do localStorage
 // a chave doneRecipes deve conter a seguinte estrutura:
@@ -40,7 +41,7 @@ function CardDoneRecipes() {
 
   return (
     <section>
-      <div>
+      <div className="categoryDoneRecipes">
         <button
           type="button"
           name="food"
@@ -69,9 +70,24 @@ function CardDoneRecipes() {
           All
         </button>
       </div>
-      {newDoneRecipes.map((recipe, index) => (
-        <div key={ recipe.id }>
-          <div>
+      <section className="searchCards-containerY">
+        { copyUrl === true
+          ? <span className="copy">Link copied!</span>
+          : <span className="copy">Not Copied!</span>}
+        {newDoneRecipes.map((recipe, index) => (
+          <div key={ recipe.id }>
+            {
+              recipe.type === 'food' ? (
+                <p data-testid={ `${index}-horizontal-top-text` }>
+                  { `${recipe.nationality} - ${recipe.category}` }
+                </p>
+              )
+                : (
+                  <p data-testid={ `${index}-horizontal-top-text` }>
+                    { recipe.alcoholicOrNot}
+                  </p>
+                )
+            }
             <Link to={ `/${recipe.type}s/${recipe.id}` }>
               <img
                 data-testid={ `${index}-horizontal-image` }
@@ -82,54 +98,42 @@ function CardDoneRecipes() {
                 height="300"
               />
             </Link>
-          </div>
-          <Link to={ `/${recipe.type}s/${recipe.id}` }>
-            <p
-              data-testid={ `${index}-horizontal-name` }
-            >
-              {recipe.name }
-            </p>
-          </Link>
-          {
-            recipe.type === 'food' ? (
-              <p data-testid={ `${index}-horizontal-top-text` }>
-                { `${recipe.nationality} - ${recipe.category}` }
-              </p>
-            )
-              : (
-                <p data-testid={ `${index}-horizontal-top-text` }>
-                  { recipe.alcoholicOrNot}
-                </p>
-              )
-          }
-          <p data-testid={ `${index}-horizontal-done-date` }>
-            {recipe.doneDate }
-          </p>
-          <button
-            type="button"
-            src={ shareIcon }
-            id={ index }
-            onClick={ () => getUrl(recipe.type, recipe.id) }
-          >
-            <img
-              data-testid={ `${index}-horizontal-share-btn` }
-              src={ shareIcon }
-              alt="icone de compartilhar"
-            />
-          </button>
-          <ul>
-            {recipe.tags.slice(0, 2).map((tagName, indexTag) => (
-              <li
-                key={ indexTag }
-                data-testid={ `${index}-${tagName}-horizontal-tag` }
+            <Link to={ `/${recipe.type}s/${recipe.id}` }>
+              <p
+                data-testid={ `${index}-horizontal-name` }
               >
-                {tagName}
-              </li>
-            ))}
-          </ul>
-        </div>
-      ))}
-      { copyUrl && <span>Link copied!</span>}
+                {recipe.name }
+              </p>
+            </Link>
+            <p data-testid={ `${index}-horizontal-done-date` }>
+              {recipe.doneDate }
+            </p>
+            <button
+              type="button"
+              src={ shareIcon }
+              id={ index }
+              onClick={ () => getUrl(recipe.type, recipe.id) }
+            >
+              <img
+                data-testid={ `${index}-horizontal-share-btn` }
+                src={ shareIcon }
+                alt="icone de compartilhar"
+              />
+            </button>
+            <ul>
+              {recipe.tags.slice(0, 2).map((tagName, indexTag) => (
+                <li
+                  key={ indexTag }
+                  data-testid={ `${index}-${tagName}-horizontal-tag` }
+                >
+                  {tagName}
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+
+      </section>
     </section>
   );
 }

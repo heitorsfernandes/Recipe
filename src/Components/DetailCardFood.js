@@ -92,7 +92,6 @@ function DetailCardFood({ recommendation }) {
           </div>
           <div className="shareAndFav">
             {' '}
-            {/* 92 a 114 -> inserir no foodsInProgress */}
             <button
               type="button"
               data-testid="share-btn"

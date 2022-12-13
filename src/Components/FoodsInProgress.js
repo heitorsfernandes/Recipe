@@ -60,7 +60,6 @@ function FoodsInProgress({ drink = false }) {
     }
     const getCheckedMeals = JSON.parse(localStorage.getItem('inProgressRecipes'));
     if (getCheckedMeals.meals[id]) {
-      console.log('line 64');
       setIngredient(getCheckedMeals.meals[id]);
     }
   }, []);
