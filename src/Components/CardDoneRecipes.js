@@ -34,9 +34,9 @@ function CardDoneRecipes() {
 
   const getUrl = async (type, id) => {
     const url2 = `http://localhost:3000/${type}s/${id}`;
-    const interval = 1000;
+    // const interval = 1000;
     await clipboardCopy(url2).then(setCopyUrl(true));
-    setInterval(() => setCopyUrl(false), interval);
+    // setInterval(() => setCopyUrl(false), interval);
   };
 
   return (
